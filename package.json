@@ -1,0 +1,22 @@
+{
+  "name": "vue.js",
+  "version": "1.0.0",
+  "description": "atualizado em 19/03/2017",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pablogeokar/VueJs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pablogeokar/VueJs/issues"
+  },
+  "homepage": "https://github.com/pablogeokar/VueJs#readme",
+  "dependencies": {
+    "vue": "^1.0.28"
+  }
+}
