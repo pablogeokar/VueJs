@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <title>Curso vue.js</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body id="app">
+        <div>
+            <h1>{{ title }}</h1> 
+            <h3>{{ status }}</h3>
+            <nav>
+                <ul>
+                    <li v-for="o in menus" >
+                        <a href="#" v-on:click.prevent="showView(o.id)">{{o.name}}</a>
+                    </li>
+
+                </ul>
+            </nav>
+            <div v-if="activedView == 0">
+                <table border="1" cellpadding="10">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Vencimento</th>
+                            <th>Nome</th>
+                            <th>Valor</th>
+                            <th>Paga?</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(index,o) in bills">
+                            <td>{{ index+1 }}</td>
+                            <td>{{ o.date_due }}</td>
+                            <td>{{ o.name }}</td>
+                            <td>{{ o.value }}</td>
+                            <td>{{ o.done }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+            <div v-if="activedView == 1">
+                <form name="form">
+                    <label>Vencimento:</label>
+                    <input type="text" v-model="bill.date_due"><br/><br/>
+                    <label>Nome:</label>
+                    <select v-model="bill.name">
+                        <option v-for="o in names" value="{{ o }}">{{ o }}</option>
+                    </select>
+                    <br/><br/>
+                    <label>valor:</label>
+                    <input type="text" v-model="bill.value"><br/><br/>
+                    <input type="button" value="Enviar" v-on:click="submit">
+                </form>
+            </div>
+        </div>
+        <script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
+        <script type="text/javascript" src="app.js"></script>        
+    </body>
+</html>
