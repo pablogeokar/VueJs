@@ -1,8 +1,6 @@
-var appComponent = Vue.extend({
- template: `
- <div>
-            <h1>{{ title }}</h1> 
-            <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusGeneral }}</h3>
+var menuComponent = Vue.extend({
+    template: 
+    `
             <nav>
                 <ul>
                     <li v-for="o in menus" >
@@ -10,6 +8,53 @@ var appComponent = Vue.extend({
                     </li>
                 </ul>
             </nav>
+    `,
+    data: function() {
+        return {
+            menus:[
+            {id: 0 , name:"Listar Contas"},{id: 1 , name:"Nova Conta"}  ,
+            ],
+        } ;       
+    },
+    methods: {
+        showView: function(id){
+            //this.$parent.activedView = id;
+            this.$root.$children[0].activedView = id;
+            if(id == 1){
+                this.$root.$children[0].formType = "INSERT";
+                //this.$parent.formType = "INSERT";
+            }  
+        },
+    } 
+});
+
+var appComponent = Vue.extend({
+ template: `
+  <style type="text/css">
+            .pago{
+                color: green;
+            }
+            .nao-pago{
+                color: red;
+            }
+            .red{
+                color: red;
+            }
+            .green{
+                color: green;
+            }
+            .gray{
+                color: gray;
+            }
+            .minha-classe{
+                background-color: burlywood;
+            }
+        </style>
+
+ <div>
+            <h1>{{ title }}</h1> 
+            <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusGeneral }}</h3>            
+            <menu-component></menu-component>
             <div v-if="activedView == 0">
                 <table border="1" cellpadding="10">
                     <thead>
@@ -60,10 +105,7 @@ var appComponent = Vue.extend({
  data: function() {
         return {
         test:"",
-        title: "Contas a Pagar",
-        menus:[
-            {id: 0 , name:"Listar Contas"},{id: 1 , name:"Nova Conta"}  ,
-        ],
+        title: "Contas a Pagar",       
         activedView: 0,
         formType: "INSERT",
         bill:{
@@ -106,13 +148,7 @@ var appComponent = Vue.extend({
             return count;
         }
     },
-    methods: {
-        showView: function(id){
-            this.activedView = id;
-            if(id == 1){
-                this.formType = "INSERT";
-            }  
-        },
+    methods: {        
         submit: function(){
             if(this.formType == 'INSERT'){
                 this.bills.push(this.bill);
@@ -161,6 +197,7 @@ var appComponent = Vue.extend({
 });
 
 Vue.component('app-component', appComponent);
+Vue.component('menu-component', menuComponent);
 
 var app = new Vue({
     el: "#app",
