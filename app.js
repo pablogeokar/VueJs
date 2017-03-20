@@ -1,16 +1,76 @@
-var app = new Vue({
-    el: "#app",
-    data: {
+var appComponent = Vue.extend({
+ template: `
+ <div>
+            <h1>{{ title }}</h1> 
+            <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusGeneral }}</h3>
+            <nav>
+                <ul>
+                    <li v-for="o in menus" >
+                        <a href="#" v-on:click.prevent="showView(o.id)">{{o.name}}</a>
+                    </li>
+                </ul>
+            </nav>
+            <div v-if="activedView == 0">
+                <table border="1" cellpadding="10">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Vencimento</th>
+                            <th>Nome</th>
+                            <th>Valor</th>
+                            <th>Paga?</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(index,o) in bills">
+                            <td>{{ index+1 }}</td>
+                            <td>{{ o.date_due }}</td>
+                            <td>{{ o.name }}</td>
+                            <td align="right">{{ o.value | currency 'R$ ' 2}}</td>
+                            <td class="minha-classe" :class="{'pago' : o.done, 'nao-pago' : !o.done}">
+                                {{ o.done | doneLabel }}
+                            </td>
+                            <td>
+                                <a href="#" @click.prevent="loadBill(o)">Editar</a> | 
+                                <a href="#" @click.prevent="deleteBill(o)">Excluir</a>                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div> 
+            <div v-if="activedView == 1">
+                <form name="form" @submit.prevent="submit">
+                    <label>Vencimento:</label>
+                    <input type="text" v-model="bill.date_due"><br/><br/>
+                    <label>Nome:</label>
+                    <select v-model="bill.name">
+                        <option v-for="o in names" :value="o">{{ o }}</option>
+                    </select>
+                    <br/><br/>
+                    <label>valor:</label>
+                    <input type="text" v-model="bill.value"><br/><br/>
+                     <label>Pago?</label>
+                    <input type="checkbox" v-model="bill.done"><br/><br/>
+                    <input type="button" value="Enviar" v-on:click="submit">
+                </form>
+            </div>
+        </div>
+  `,
+ data: function() {
+        return {
         test:"",
         title: "Contas a Pagar",
         menus:[
             {id: 0 , name:"Listar Contas"},{id: 1 , name:"Nova Conta"}  ,
         ],
-        activedView: 1,
+        activedView: 0,
+        formType: "INSERT",
         bill:{
             date_due:"",
             name:"",
-            value:0
+            value:0,
+            done: 0
         },
         names:[
           "Conta de Luz",
@@ -30,32 +90,80 @@ var app = new Vue({
             {date_due: "02/04/2017", name: "Empréstimo", value: 525.99, done: 0},
             {date_due: "03/04/2017", name: "Gasolina", value: 170.00, done: 0},
         ]
+        }
     },
     computed: {
         status: function(){
+            if(!this.bills.length){
+                return false;
+            }
             var count = 0;
             for (var i in this.bills){
                 if(!this.bills[i].done){
                     count++;
                 }
             }
-            return !count ? "Nnhuma Conta a Pagar" : "Existem " + count +" contas a serem pagas";
+            return count;
         }
     },
     methods: {
         showView: function(id){
             this.activedView = id;
+            if(id == 1){
+                this.formType = "INSERT";
+            }  
         },
         submit: function(){
-            this.bills.push(this.bill);
-            this.activedView =0;
-        }
-    }
-})
+            if(this.formType == 'INSERT'){
+                this.bills.push(this.bill);
+            }
 
-/* EXEMPLO DE OBSERVADOR
-app.$watch('test', function(novoValor, velhoValor){
-    console.log("velhoValor: " + velhoValor +", novoValor " + novoValor );
-})
-*/
+            this.bill = {
+                date_due: '',
+                name: '',
+                value: 0,
+                done: 0
+            }
+            
+            this.activedView =0;
+        },
+        loadBill: function(bill){
+            this.bill = bill;
+            this.activedView = 1;
+            this.formType = 'UPDATE';
+        },
+        deleteBill: function(bill){
+            if(confirm("Deseja excluir esta conta?")){
+            this.bills.$remove(bill);
+        }
+        }
+    },
+    filters: {
+        doneLabel: function(argument){
+            if(argument == 0){
+                return "Não Paga";
+            } else {
+                return "Paga";
+            }
+        },
+        statusGeneral: function(argument){
+            if(argument === false){
+                return "Nenhuma Conta Cadastrada";
+            }
+
+            if(!argument){
+                return "Nenhuma conta a pagar"
+            } else {
+                return "Existem " + argument +" conta(s) a ser(em) paga(s)";
+            }
+        }
+    } 
+});
+
+Vue.component('app-component', appComponent);
+
+var app = new Vue({
+    el: "#app",
+   
+});
 
