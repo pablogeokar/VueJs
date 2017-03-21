@@ -18,11 +18,11 @@ var menuComponent = Vue.extend({
     },
     methods: {
         showView: function(id){
-            //this.$parent.activedView = id;
-            this.$root.$children[0].activedView = id;
+            this.$parent.activedView = id;
+            //this.$root.$children[0].activedView = id;
             if(id == 1){
-                this.$root.$children[0].formType = "INSERT";
-                //this.$parent.formType = "INSERT";
+                //this.$root.$children[0].formType = "INSERT";
+                this.$parent.formType = "INSERT";
             }  
         },
     } 
