@@ -62,17 +62,17 @@ names:[
 methods:{
      submit: function(){
             if(this.formType == 'INSERT'){
-                this.bills.push(this.bill);
+                this.$parent.$children[1].bills.push(this.bill);
             }
 
             this.bill = {
                 date_due: '',
                 name: '',
                 value: 0,
-                done: 0
+                done: false,
             }
             
-            this.activedView =0;
+            this.$parent.activedView =0;
         },
 
 }
@@ -120,13 +120,13 @@ data: function(){
     return{
 
         bills: [
-            {date_due: "19/03/2017", name: "Conta de Luz", value: 25.99, done: 1},
-            {date_due: "21/03/2017", name: "Conta de Água", value: 31.99, done: 0},
-            {date_due: "22/03/2017", name: "Conta de telefone", value: 5.30, done: 0},
-            {date_due: "25/03/2017", name: "Supermercado", value: 125.20, done: 0},
-            {date_due: "01/04/2017", name: "Cartão de Crédito", value: 225.99, done: 0},
-            {date_due: "02/04/2017", name: "Empréstimo", value: 525.99, done: 0},
-            {date_due: "03/04/2017", name: "Gasolina", value: 170.00, done: 0},
+            {date_due: "19/03/2017", name: "Conta de Luz", value: 25.99, done: true},
+            {date_due: "21/03/2017", name: "Conta de Água", value: 31.99, done: false},
+            {date_due: "22/03/2017", name: "Conta de telefone", value: 5.30, done: false},
+            {date_due: "25/03/2017", name: "Supermercado", value: 125.20, done: false},
+            {date_due: "01/04/2017", name: "Cartão de Crédito", value: 225.99, done: false},
+            {date_due: "02/04/2017", name: "Empréstimo", value: 525.99, done: false},
+            {date_due: "03/04/2017", name: "Gasolina", value: 170.00, done: false},
         ]
     };
 },
@@ -141,10 +141,35 @@ methods: {
             this.bills.$remove(bill);
         }
         }
-}
+},
+    filters: {
+        doneLabel: function(argument){
+            if(argument === false){
+                return "Não Paga";
+            } else {
+                return "Paga";
+            }
+        },
+        statusGeneral: function(argument){
+            if(argument === false){
+                return "Nenhuma Conta Cadastrada";
+            }
+
+            if(!argument){
+                return "Nenhuma conta a pagar"
+            } else {
+                return "Existem " + argument +" conta(s) a ser(em) paga(s)";
+            }
+        }
+    }
 });
 
 var appComponent = Vue.extend({
+ components:{
+    'menu-component': menuComponent,
+    'bill-list-component': billListComponent,
+    'bill-create-component': billCreateComponent 
+ },
  template: `
   <style type="text/css">            
             .red{
@@ -165,11 +190,12 @@ var appComponent = Vue.extend({
             <h1>{{ title }}</h1> 
             <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusGeneral }}</h3>            
             <menu-component></menu-component>
-            <div v-if="activedView == 0">
-               <bill-list-component></bill-list-component> 
+            <!--<div v-if="activedView == 0">-->
+            <div v-show="activedView == 0">
+               <bill-list-component v-ref:bill-list-component></bill-list-component> 
             </div> 
-            <div v-if="activedView == 1">
-                <bill-create-component :bill="bill" :form-type="formType"></bill-create-component>                
+            <div v-show="activedView == 1">
+                <bill-create-component :bill.sync="bill" :form-type="formType"></bill-create-component>                
             </div>
         </div>
   `,
@@ -183,18 +209,19 @@ var appComponent = Vue.extend({
             date_due:"",
             name:"",
             value:0,
-            done: 0
+            done: false
         },        
         }
     },
     computed: {
         status: function(){
-            if(!this.bills.length){
+            var billListComponent = this.$refs.billListComponent;
+            if(!billListComponent.bills.length){
                 return false;
             }
             var count = 0;
-            for (var i in this.bills){
-                if(!this.bills[i].done){
+            for (var i in billListComponent.bills){
+                if(!billListComponent.bills[i].done){
                     count++;
                 }
             }
@@ -205,14 +232,7 @@ var appComponent = Vue.extend({
                
         
     },
-    filters: {
-        doneLabel: function(argument){
-            if(argument == 0){
-                return "Não Paga";
-            } else {
-                return "Paga";
-            }
-        },
+    filters: {     
         statusGeneral: function(argument){
             if(argument === false){
                 return "Nenhuma Conta Cadastrada";
@@ -228,10 +248,15 @@ var appComponent = Vue.extend({
  
 });
 
+
 Vue.component('app-component', appComponent);
+
+/* REGISTRA COMPONENTES
 Vue.component('menu-component', menuComponent);
 Vue.component('bill-list-component', billListComponent);
 Vue.component('bill-create-component', billCreateComponent);
+*/
+
 
 var app = new Vue({
     el: "#app",
