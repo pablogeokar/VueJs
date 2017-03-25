@@ -1,5 +1,5 @@
 var menuComponent = Vue.extend({
-    template: 
+    template:
     `
             <nav>
                 <ul>
@@ -9,27 +9,29 @@ var menuComponent = Vue.extend({
                 </ul>
             </nav>
     `,
-    data: function() {
+    data: function () {
         return {
-            menus:[
-            {id: 0 , name:"Listar Contas"},{id: 1 , name:"Nova Conta"}  ,
+            menus: [
+                { id: 0, name: "Listar Contas" }, { id: 1, name: "Nova Conta" },
             ],
-        } ;       
+        };
     },
     methods: {
-        showView: function(id){
-            this.$parent.activedView = id;
+        showView: function (id) {
+            // this.$parent.activedView = id;
+            this.$dispatch('change-activedView', id);
             //this.$root.$children[0].activedView = id;
-            if(id == 1){
+            if (id == 1) {
                 //this.$root.$children[0].formType = "INSERT";
-                this.$parent.formType = "INSERT";
-            }  
+                //this.$parent.formType = "INSERT";
+                this.$dispatch('change-formType', 'INSERT');
+            }
         },
-    } 
+    }
 });
 
-var billCreateComponent  = Vue.extend({
-template: `
+var billCreateComponent = Vue.extend({
+    template: `
 <form name="form" @submit.prevent="submit">
                     <label>Vencimento:</label>
                     <input type="text" v-model="bill.date_due"><br/><br/>
@@ -45,24 +47,32 @@ template: `
                     <input type="button" value="Enviar" v-on:click="submit">
                 </form>
 `,
-props: ['bill', 'formType'],
-data: function(){
-    return {
-names:[
-          "Conta de Luz",
-          "Conta de Água",
-          "Conta de telefone",
-          "Supermercado",
-          "Cartão de Crédito",
-          "Empréstimo",
-          "Gasolina"
-        ],
-    };
-},
-methods:{
-     submit: function(){
-            if(this.formType == 'INSERT'){
-                this.$parent.$children[1].bills.push(this.bill);
+    data: function () {
+        return {
+            formType: "INSERT",
+            names: [
+                "Conta de Luz",
+                "Conta de Água",
+                "Conta de telefone",
+                "Supermercado",
+                "Cartão de Crédito",
+                "Empréstimo",
+                "Gasolina"
+            ],
+            bill: {
+                date_due: "",
+                name: "",
+                value: 0,
+                done: false
+            }
+        };
+    },
+    methods: {
+        submit: function () {
+            if (this.formType == 'INSERT') {
+                //this.$parent.$children[1].bills.push(this.bill);
+                //this.$parent.$refs.billListComponent.bills.push(this.bill);
+                this.$dispatch('new-bill', this.bill);
             }
 
             this.bill = {
@@ -71,15 +81,25 @@ methods:{
                 value: 0,
                 done: false,
             }
-            
-            this.$parent.activedView =0;
+
+            //this.$parent.activedView = 0;
+            this.$dispatch('change-activedView', 0);
+
         },
 
-}
+    },
+    events: {
+        'change-formType': function (formType) {
+            this.formType = formType;
+        },
+        'change-bill': function (bill) {
+            this.bill = bill;
+        },
+    }
 });
 
-var billListComponent  = Vue.extend({
-template: `
+var billListComponent = Vue.extend({
+    template: `
  <style type="text/css">
             .pago{
                 color: green;
@@ -116,61 +136,69 @@ template: `
                     </tbody>
                 </table>
 `,
-data: function(){
-    return{
+    data: function () {
+        return {
 
-        bills: [
-            {date_due: "19/03/2017", name: "Conta de Luz", value: 25.99, done: true},
-            {date_due: "21/03/2017", name: "Conta de Água", value: 31.99, done: false},
-            {date_due: "22/03/2017", name: "Conta de telefone", value: 5.30, done: false},
-            {date_due: "25/03/2017", name: "Supermercado", value: 125.20, done: false},
-            {date_due: "01/04/2017", name: "Cartão de Crédito", value: 225.99, done: false},
-            {date_due: "02/04/2017", name: "Empréstimo", value: 525.99, done: false},
-            {date_due: "03/04/2017", name: "Gasolina", value: 170.00, done: false},
-        ]
-    };
-},
-methods: {
-    loadBill: function(bill){
-            this.$parent.bill = bill;
-            this.$parent.activedView = 1;
-            this.$parent.formType = 'UPDATE';
+            bills: [
+                { date_due: "19/03/2017", name: "Conta de Luz", value: 25.99, done: true },
+                { date_due: "21/03/2017", name: "Conta de Água", value: 31.99, done: false },
+                { date_due: "22/03/2017", name: "Conta de telefone", value: 5.30, done: false },
+                { date_due: "25/03/2017", name: "Supermercado", value: 125.20, done: false },
+                { date_due: "01/04/2017", name: "Cartão de Crédito", value: 225.99, done: false },
+                { date_due: "02/04/2017", name: "Empréstimo", value: 525.99, done: false },
+                { date_due: "03/04/2017", name: "Gasolina", value: 170.00, done: false },
+            ]
+        };
+    },
+    methods: {
+        loadBill: function (bill) {
+            //this.$parent.bill = bill;
+            //this.$parent.activedView = 1;
+            //this.$parent.formType = 'UPDATE';
+            this.$dispatch('change-bill', bill);
+            this.$dispatch('change-activedView', 1);
+            this.$dispatch('change-formType', 'UPDATE');
         },
-        deleteBill: function(bill){
-            if(confirm("Deseja excluir esta conta?")){
-            this.bills.$remove(bill);
+        deleteBill: function (bill) {
+            if (confirm("Deseja excluir esta conta?")) {
+                this.bills.$remove(bill);
+            }
         }
+    },
+    events: {
+        'new-bill': function (bill) {
+            this.bills.push(bill);
         }
-},
+    },
     filters: {
-        doneLabel: function(argument){
-            if(argument === false){
+        doneLabel: function (argument) {
+            if (argument === false) {
                 return "Não Paga";
             } else {
                 return "Paga";
             }
         },
-        statusGeneral: function(argument){
-            if(argument === false){
+        statusGeneral: function (argument) {
+            if (argument === false) {
                 return "Nenhuma Conta Cadastrada";
             }
 
-            if(!argument){
+            if (!argument) {
                 return "Nenhuma conta a pagar"
             } else {
-                return "Existem " + argument +" conta(s) a ser(em) paga(s)";
+                return "Existem " + argument + " conta(s) a ser(em) paga(s)";
             }
         }
     }
 });
 
 var appComponent = Vue.extend({
- components:{
-    'menu-component': menuComponent,
-    'bill-list-component': billListComponent,
-    'bill-create-component': billCreateComponent 
- },
- template: `
+    components: {
+        'menu-component': menuComponent,
+        'bill-list-component': billListComponent,
+        'bill-create-component': billCreateComponent
+    },
+    template: `
   <style type="text/css">            
             .red{
                 color: red;
@@ -195,57 +223,65 @@ var appComponent = Vue.extend({
                <bill-list-component v-ref:bill-list-component></bill-list-component> 
             </div> 
             <div v-show="activedView == 1">
-                <bill-create-component :bill.sync="bill" :form-type="formType"></bill-create-component>                
+                <bill-create-component :bill.sync="bill"></bill-create-component>                
             </div>
         </div>
   `,
- data: function() {
+    data: function () {
         return {
-        test:"",
-        title: "Contas a Pagar",       
-        activedView: 0,
-        formType: "INSERT",
-        bill:{
-            date_due:"",
-            name:"",
-            value:0,
-            done: false
-        },        
+            test: "",
+            title: "Contas a Pagar",
+            activedView: 0,
         }
     },
     computed: {
-        status: function(){
+        status: function () {
             var billListComponent = this.$refs.billListComponent;
-            if(!billListComponent.bills.length){
+            if (!billListComponent.bills.length) {
                 return false;
             }
             var count = 0;
-            for (var i in billListComponent.bills){
-                if(!billListComponent.bills[i].done){
+            for (var i in billListComponent.bills) {
+                if (!billListComponent.bills[i].done) {
                     count++;
                 }
             }
             return count;
         }
     },
-    methods: {        
-               
-        
+    methods: {
+
+
     },
-    filters: {     
-        statusGeneral: function(argument){
-            if(argument === false){
+    events: {
+        'change-activedView': function (activedView) {
+            this.activedView = activedView;
+        },
+        'change-formType': function (formType) {
+            //this.formType = formType;
+            this.$broadcast('change-formType', formType);
+        },
+        'change-bill': function (bill) {
+            this.$broadcast('change-bill', bill);
+        },
+        'new-bill': function (bill) {
+            this.$broadcast('new-bill', bill);
+        }
+    },
+    filters: {
+        statusGeneral: function (argument) {
+            if (argument === false) {
                 return "Nenhuma Conta Cadastrada";
             }
 
-            if(!argument){
+            if (!argument) {
                 return "Nenhuma conta a pagar"
             } else {
-                return "Existem " + argument +" conta(s) a ser(em) paga(s)";
+                return "Existem " + argument + " conta(s) a ser(em) paga(s)";
             }
         }
     }
- 
+
 });
 
 
@@ -260,6 +296,6 @@ Vue.component('bill-create-component', billCreateComponent);
 
 var app = new Vue({
     el: "#app",
-   
+
 });
 
