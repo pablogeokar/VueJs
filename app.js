@@ -1,3 +1,4 @@
+
 var menuComponent = Vue.extend({
     template:
     `
@@ -169,26 +170,6 @@ var billListComponent = Vue.extend({
         'new-bill': function (bill) {
             this.bills.push(bill);
         }
-    },
-    filters: {
-        doneLabel: function (argument) {
-            if (argument === false) {
-                return "Não Paga";
-            } else {
-                return "Paga";
-            }
-        },
-        statusGeneral: function (argument) {
-            if (argument === false) {
-                return "Nenhuma Conta Cadastrada";
-            }
-
-            if (!argument) {
-                return "Nenhuma conta a pagar"
-            } else {
-                return "Existem " + argument + " conta(s) a ser(em) paga(s)";
-            }
-        }
     }
 });
 
@@ -267,21 +248,7 @@ var appComponent = Vue.extend({
         'new-bill': function (bill) {
             this.$broadcast('new-bill', bill);
         }
-    },
-    filters: {
-        statusGeneral: function (argument) {
-            if (argument === false) {
-                return "Nenhuma Conta Cadastrada";
-            }
-
-            if (!argument) {
-                return "Nenhuma conta a pagar"
-            } else {
-                return "Existem " + argument + " conta(s) a ser(em) paga(s)";
-            }
-        }
     }
-
 });
 
 
@@ -298,4 +265,6 @@ var app = new Vue({
     el: "#app",
 
 });
+
+
 
