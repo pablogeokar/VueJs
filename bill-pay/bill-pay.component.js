@@ -1,6 +1,6 @@
-window.appComponent = Vue.extend({
+window.billPayComponent = Vue.extend({
     components: {
-        'menu-component': menuComponent
+        'menu-component': billPayMenuComponent
     },
     template: `
   <style type="text/css">            
@@ -20,17 +20,8 @@ window.appComponent = Vue.extend({
 
  <div>
             <h1>{{ title }}</h1> 
-            <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusGeneral }}</h3>            
-            <menu-component></menu-component>
-            <!--<div v-if="activedView == 0">-->
-            <!--
-            <div v-show="activedView == 0">
-               <bill-list-component v-ref:bill-list-component></bill-list-component> 
-            </div> 
-            <div v-show="activedView == 1">
-                <bill-create-component :bill.sync="bill"></bill-create-component>                
-            </div>
-            -->
+            <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusPay }}</h3>            
+            <menu-component></menu-component>            
             <router-view></router-view>
         </div>
   `,
@@ -42,7 +33,7 @@ window.appComponent = Vue.extend({
     },
     computed: {
         status: function () {
-            var bills = this.$root.$children[0].bills;
+            var bills = this.$root.$children[0].billsPay;
             
             if (!bills.length) {
                 return false;
@@ -59,4 +50,4 @@ window.appComponent = Vue.extend({
 });
 
 
-Vue.component('app-component', appComponent);
+//Vue.component('app-component', appComponent);

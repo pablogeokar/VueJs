@@ -3,15 +3,25 @@ var router = new VueRouter();
 
 var mainComponent = Vue.extend({
     components: {
-        'app-component': appComponent
+        'bill-component': billComponent,
+        'dashboard-component': dashboardComponent        
     },
-    template: '<app-component></app-component>',
+    template: '<bill-component></bill-component>',
     data: function () {
         return {
-            bills: [
+            billsPay: [
                 { date_due: "19/03/2017", name: "Conta de Luz", value: 25.99, done: true },
                 { date_due: "21/03/2017", name: "Conta de Água", value: 31.99, done: false },
                 { date_due: "22/03/2017", name: "Conta de telefone", value: 5.30, done: false },
+                { date_due: "25/03/2017", name: "Supermercado", value: 125.20, done: false },
+                { date_due: "01/04/2017", name: "Cartão de Crédito", value: 225.99, done: false },
+                { date_due: "02/04/2017", name: "Empréstimo", value: 525.99, done: false },
+                { date_due: "03/04/2017", name: "Gasolina", value: 170.00, done: false },
+            ],
+             billsReceive: [
+                { date_due: "19/03/2017", name: "Conta de Luz", value: 25.99, done: true },
+                { date_due: "21/03/2017", name: "Conta de Água", value: 31.99, done: true },
+                { date_due: "22/03/2017", name: "Conta de telefone", value: 5.30, done: true },
                 { date_due: "25/03/2017", name: "Supermercado", value: 125.20, done: false },
                 { date_due: "01/04/2017", name: "Cartão de Crédito", value: 225.99, done: false },
                 { date_due: "02/04/2017", name: "Empréstimo", value: 525.99, done: false },
@@ -23,22 +33,48 @@ var mainComponent = Vue.extend({
 });
 
 router.map({
-    '/bills': {
-        name: 'bill.list',
-        component: billListComponent
+    '/bill-pays': {
+        component: billPayComponent,
+        subRoutes: {
+            '/': {
+                name: 'bill-pay.list',
+                component: billPayListComponent
+            },
+            '/create': {
+                name: 'bill-pay.create',
+                component: billPayCreateComponent
+            },
+            '/:index/update': {
+                name: 'bill-pay.update',
+                component: billPayCreateComponent
+            }
+        }
     },
-    '/bill/create': {
-        name: 'bill.create',
-        component: billCreateComponent
+    '/bill-receives': {        
+        component: billReceiveComponent,
+        subRoutes: {
+            '/': {
+                name: 'bill-receive.list',
+                component: billReceiveListComponent
+            },
+            '/create': {
+                name: 'bill-receive.create',
+                component: billReceiveCreateComponent
+            },
+            '/:index/update': {
+                name: 'bill-receive.update',
+                component: billReceiveCreateComponent
+            }
+        }
     },
-    '/bill/:index/update': {
-        name: 'bill.update',
-        component: billCreateComponent
+    '/dashboard':{
+        name: 'dashboard',
+        component: dashboardComponent        
     },
-    /*Rota default*/
     '*': {
-        component: billListComponent
+        component: billPayListComponent
     }
+
 });
 
 router.start({
@@ -49,9 +85,11 @@ router.start({
 }, '#app')
 
 /*Conserta erros de endereço e redireciona para rota padrão*/
+
 router.redirect({
-    '*': '/bills'
+    '*': '/dashboard'
 })
+
 
 
 
