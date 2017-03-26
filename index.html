@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-    <head>
-        <title>Curso vue.js</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">      
-    </head>
-    <body id="app">
-        <app-component></app-component>        
-        <script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
-        <script type="text/javascript" src="app.js"></script>        
-    </body>
+
+<head>
+    <title>Curso vue.js</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<body id="app">
+    <!--<app-component></app-component>-->    
+    <router-view></router-view>
+    <script type="text/javascript" src="node_modules/vue/dist/vue.min.js"></script>
+    <script type="text/javascript" src="node_modules/vue-router/dist/vue-router.min.js"></script>
+    <script type="text/javascript" src="filters.js"></script>
+    <script type="text/javascript" src="menu.component.js"></script>
+    <script type="text/javascript" src="bill-list.component.js"></script>
+    <script type="text/javascript" src="bill-create.component.js"></script>
+    <script type="text/javascript" src="app.component.js"></script>
+</body>
+
 </html>
