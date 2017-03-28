@@ -18,6 +18,7 @@
   "homepage": "https://github.com/pablogeokar/VueJs#readme",
   "dependencies": {
     "vue": "^1.0.28",
+    "vue-resource": "^1.2.1",
     "vue-router": "0.7.13"
   }
 }

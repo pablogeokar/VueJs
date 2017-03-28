@@ -1,6 +1,7 @@
 
 var router = new VueRouter();
 
+/* COMENTAR PARA FUNCIONAR A API
 var mainComponent = Vue.extend({
     components: {
         'bill-component': billComponent,
@@ -31,6 +32,7 @@ var mainComponent = Vue.extend({
     }
 
 });
+*/
 
 router.map({
     '/bill-pays': {
@@ -44,10 +46,10 @@ router.map({
                 name: 'bill-pay.create',
                 component: billPayCreateComponent
             },
-            '/:index/update': {
+            '/:id/update': {
                 name: 'bill-pay.update',
                 component: billPayCreateComponent
-            }
+            },
         }
     },
     '/bill-receives': {        
@@ -60,8 +62,8 @@ router.map({
             '/create': {
                 name: 'bill-receive.create',
                 component: billReceiveCreateComponent
-            },
-            '/:index/update': {
+            },           
+                '/:id/update': {
                 name: 'bill-receive.update',
                 component: billReceiveCreateComponent
             }
@@ -79,7 +81,8 @@ router.map({
 
 router.start({
     components: {
-        'main-component': mainComponent
+      //  'main-component': mainComponent //cOMENTAR PARA FUNCIONAR A API
+      'bill-component': billComponent //DESCOMENTAR PARA FUNCIONAR A API
     },
 
 }, '#app')

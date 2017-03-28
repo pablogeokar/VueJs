@@ -15,12 +15,15 @@ window.billPayCreateComponent = Vue.extend({
                     <input type="button" value="Enviar" v-on:click="submit">
                 </form>
 `,
+    http: {
+        root: 'http://127.0.0.1/api'
+    },
     data: function () {
         return {
             formType: "INSERT",
             names: [
-                "Conta de Luz",
-                "Conta de Água",
+                "Conta de luz",
+                "Conta de água",
                 "Conta de telefone",
                 "Supermercado",
                 "Cartão de Crédito",
@@ -35,16 +38,16 @@ window.billPayCreateComponent = Vue.extend({
             }
         };
     },
-    created: function(){
-        if(this.$route.name == 'bill-pay.update'){
+    created: function () {
+        if (this.$route.name == 'bill-pay.update') {
             this.formType = 'UPDATE';
-            this.getBill(this.$route.params.index);        
+            this.getBill(this.$route.params.id);
         }
-        
+
     },
     methods: {
         submit: function () {
-            if (this.formType == 'INSERT') {                
+            if (this.formType == 'INSERT') {
                 this.$root.$children[0].billsPay.push(this.bill);
             }
 
@@ -54,13 +57,14 @@ window.billPayCreateComponent = Vue.extend({
                 value: 0,
                 done: false,
             };
-            
-           this.$router.go({name:'bill-pay.list'});
+
+            this.$router.go({ name: 'bill-pay.list' });
 
         },
-        getBill: function(index){
-            var bills = this.$root.$children[0].billsPay;
-            this.bill = bills[index];
+        getBill: function (id) {
+            this.$http.get('bills/' + id).then(function (response) {
+                this.bill = response.data;
+            });
         }
 
     }
