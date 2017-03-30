@@ -27,11 +27,12 @@ window.billPayComponent = Vue.extend({
   `,
     data: function () {
         return {
-            test: "",
-            title: "Contas a Pagar",            
+            title: "Contas a Pagar",
+            status: false
         }
     },
     computed: {
+        /*
         status: function () {
             var bills = this.$root.$children[0].billsPay;
             
@@ -46,6 +47,38 @@ window.billPayComponent = Vue.extend({
             }
             return count;
         }
+        */
+    },
+    http: {
+        root: 'http://127.0.0.1/api'
+    },
+    created: function() {
+        this.updateStatus();
+    },
+    methods: {
+        calculeteStatus: function (bills) {         
+
+            if (!bills.length) {
+                this.status = false;                
+            }
+            var count = 0;
+            for (var i in bills) {
+                if (!bills[i].done) {
+                    count++;
+                }
+            }
+            this.status = count;
+        },
+        updateStatus: function(){
+            this.$http.get('bills').then(function(response){
+                this.calculeteStatus(response.data);
+            });
+        }
+    },
+    events: {
+       'change-status' : function(){
+           this.updateStatus();
+       }
     }
 });
 
