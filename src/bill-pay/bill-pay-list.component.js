@@ -1,4 +1,4 @@
-window.billReceiveListComponent = Vue.extend({
+window.billPayListComponent = Vue.extend({
     template: `
  <style type="text/css">
             .pago{
@@ -22,38 +22,36 @@ window.billReceiveListComponent = Vue.extend({
                     <tbody>
                         <tr v-for="(index,o) in bills">
                             <td>{{ index+1 }}</td>
-                            <td>{{ o.date_due }}</td>
+                            <td>{{ o.date_due | dateFormat }}</td>
                             <td>{{ o.name }}</td>
-                            <td align="right">{{ o.value | currency 'R$ ' 2}}</td>
+                            <td align="right">{{ o.value | numberFormat}}</td>
                             <td class="minha-classe" :class="{'pago' : o.done, 'nao-pago' : !o.done}">
                                 {{ o.done | doneLabel }}
                             </td>
-                            <td>                                                                
-                                <a v-link="{ name: 'bill-receive.update', params: {id: o.id} }">Editar</a> | 
+                            <td>                              
+                                <a v-link="{ name: 'bill-pay.update', params: {id: o.id} }">Editar</a> | 
                                 <a href="#" @click.prevent="deleteBill(o)">Excluir</a>                                
                             </td>
                         </tr>
                     </tbody>
                 </table>
 `,
-    created: function () {
-        var self = this;
-        BillReceive.query().then(function (response) {
-            self.bills = response.data;
-        });
+    created() {                
+        Bill.query().then((response) => {
+            this.bills = response.data;
+        });        
     },
-    data: function () {
+    data() {
         return {
             bills: []
         };
     },
     methods: {
-        deleteBill: function (bill) {
-            if (confirm("Deseja excluir esta conta?")) {
-                var self = this;
-                BillReceive.delete({ id: bill.id }).then(function (response) {
-                    self.bills.$remove(bill);
-                    self.$dispatch('change-info');
+        deleteBill(bill){
+            if (confirm("Deseja excluir esta conta?")) {                              
+                Bill.delete({ id: bill.id }).then((response) => {
+                    this.bills.$remove(bill);
+                    this.$dispatch('change-info');
                 });
             }
         }

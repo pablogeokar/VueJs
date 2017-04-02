@@ -1,4 +1,4 @@
-window.billPayListComponent = Vue.extend({
+window.billReceiveListComponent = Vue.extend({
     template: `
  <style type="text/css">
             .pago{
@@ -24,50 +24,37 @@ window.billPayListComponent = Vue.extend({
                             <td>{{ index+1 }}</td>
                             <td>{{ o.date_due }}</td>
                             <td>{{ o.name }}</td>
-                            <td align="right">{{ o.value | currency 'R$ ' 2}}</td>
+                            <td align="right">{{ o.value | numberFormat}}</td>
                             <td class="minha-classe" :class="{'pago' : o.done, 'nao-pago' : !o.done}">
                                 {{ o.done | doneLabel }}
                             </td>
-                            <td>                              
-                                <a v-link="{ name: 'bill-pay.update', params: {id: o.id} }">Editar</a> | 
+                            <td>                                                                
+                                <a v-link="{ name: 'bill-receive.update', params: {id: o.id} }">Editar</a> | 
                                 <a href="#" @click.prevent="deleteBill(o)">Excluir</a>                                
                             </td>
                         </tr>
                     </tbody>
                 </table>
 `,
-    created: function () {
-        //var resource = this.$resource('bills{/id}');
+    created() {
         var self = this;
-        Bill.query().then(function (response) {
+        BillReceive.query().then(function (response) {
             self.bills = response.data;
         });
-        /*
-        this.$http.get('bills').then(function (response) {
-            this.bills = response.data;
-        })
-        */
     },
-    data: function () {
+    data() {
         return {
             bills: []
         };
     },
     methods: {
-        deleteBill: function (bill) {
+        deleteBill(bill) {
             if (confirm("Deseja excluir esta conta?")) {
-               // var resource = this.$resource('bills{/id}');
-               var self = this;
-                Bill.delete({ id: bill.id }).then(function (response) {
+                let self = this;
+                BillReceive.delete({ id: bill.id }).then(function (response) {
                     self.bills.$remove(bill);
                     self.$dispatch('change-info');
                 });
-                /*
-                this.$http.delete('bills/' + bill.id).then(function (response) {
-                    this.bills.$remove(bill);
-                    this.$dispatch('change-status');
-                });
-                */
             }
         }
     }

@@ -21,12 +21,12 @@ window.billPayComponent = Vue.extend({
  <div>
             <h1>{{ title }}</h1> 
             <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusPay }}</h3>            
-            <h3> {{ total | currency 'R$ '}} </h3>            
+            <h3> {{ total | numberFormat}} </h3>            
             <menu-component></menu-component>            
             <router-view></router-view>
         </div>
   `,
-    data: function () {
+    data() {
         return {
             title: "Contas a Pagar",
             status: false,
@@ -36,42 +36,40 @@ window.billPayComponent = Vue.extend({
     computed: {
        
     },
-    created: function() {
+    created() {
         this.updateStatus();
         this.updateTotal();
     },
     methods: {
-        calculeteStatus: function (bills) {         
+        calculeteStatus(bills) {         
 
             if (!bills.length) {
                 this.status = false;                
             }
-            var count = 0;
-            for (var i in bills) {
+            let count = 0;
+            for (let i in bills) {
                 if (!bills[i].done) {
                     count++;
                 }
             }
             this.status = count;
         },
-        updateStatus: function(){
-            //var resource = this.$resource('bills{/id}');
-            //resource.query().then(function(response){
-                var self = this;
-                Bill.query().then(function(response){
+        updateStatus(){            
+                let self = this;
+                Bill.query().then((response) =>{
                 self.calculeteStatus(response.data);
             });
             
         },
-        updateTotal : function(){
-            var self = this;
-            Bill.total().then(function(response){
+        updateTotal(){
+            let self = this;
+            Bill.total().then((response) =>{
                 self.total = response.data.total;
             });
         }
     },
     events: {
-       'change-info' : function(){
+       'change-info'(){
            this.updateStatus();
            this.updateTotal();
        }

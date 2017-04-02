@@ -1,32 +1,13 @@
+"use strict";
+
+var names = ["Conta de Luz", "Conta de Água", "Conta de telefone", "Supermercado", "Cartão de Crédito", "Empréstimo", "Gasolina"];
+
 window.billReceiveCreateComponent = Vue.extend({
-    template: `
-<form name="form" @submit.prevent="submit">
-                    <label>Vencimento:</label>
-                    <input type="text" v-model="bill.date_due"><br/><br/>
-                    <label>Nome:</label>
-                    <select v-model="bill.name">
-                        <option v-for="o in names" :value="o">{{ o }}</option>
-                    </select>
-                    <br/><br/>
-                    <label>valor:</label>
-                    <input type="text" v-model="bill.value"><br/><br/>
-                     <label>Pago?</label>
-                    <input type="checkbox" v-model="bill.done"><br/><br/>
-                    <input type="button" value="Enviar" v-on:click="submit">
-                </form>
-`,
-    data: function () {
+    template: "\n<form name=\"form\" @submit.prevent=\"submit\">\n                    <label>Vencimento:</label>\n                    <input type=\"text\" v-model=\"bill.date_due\"><br/><br/>\n                    <label>Nome:</label>\n                    <select v-model=\"bill.name\">\n                        <option v-for=\"o in names\" :value=\"o\">{{ o }}</option>\n                    </select>\n                    <br/><br/>\n                    <label>valor:</label>\n                    <input type=\"text\" v-model=\"bill.value | numberFormat\"><br/><br/>\n                     <label>Pago?</label>\n                    <input type=\"checkbox\" v-model=\"bill.done\"><br/><br/>\n                    <input type=\"button\" value=\"Enviar\" v-on:click=\"submit\">\n                </form>\n",
+    data: function data() {
         return {
             formType: "INSERT",
-            names: [
-                "Conta de Luz",
-                "Conta de Água",
-                "Conta de telefone",
-                "Supermercado",
-                "Cartão de Crédito",
-                "Empréstimo",
-                "Gasolina"
-            ],
+            names: names,
             bill: {
                 date_due: "",
                 name: "",
@@ -35,15 +16,15 @@ window.billReceiveCreateComponent = Vue.extend({
             }
         };
     },
-    created: function () {
+    created: function created() {
         if (this.$route.name == 'bill-receive.update') {
             this.formType = 'UPDATE';
             this.getBill(this.$route.params.id);
         }
-
     },
+
     methods: {
-        submit: function () {
+        submit: function submit() {
             var self = this;
             if (this.formType == 'INSERT') {
                 BillReceive.save({}, this.bill).then(function (response) {
@@ -56,14 +37,12 @@ window.billReceiveCreateComponent = Vue.extend({
                     self.$router.go({ name: 'bill-receive.list' });
                 });
             }
-
         },
-        getBill: function (id) {
+        getBill: function getBill(id) {
             var self = this;
             BillReceive.get({ id: id }).then(function (response) {
                 self.bill = response.data;
             });
         }
-
     }
 });

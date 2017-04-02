@@ -2,10 +2,10 @@ window.dashboardComponent = Vue.extend({
     template: `
     <h1>Dashboard<h1>
     <h2>
-    Contas a Pagar: {{totalPay | currency 'R$ '}}
+    Contas a Pagar: {{totalPay | numberFormat}}
     </h2>
     <h2>
-    Contas a Receber: {{totalReceive | currency 'R$ '}}
+    Contas a Receber: {{totalReceive | numberFormat}}
     </h2>
     `,
     data: function () {
