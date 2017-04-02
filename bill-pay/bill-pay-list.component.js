@@ -40,23 +40,35 @@ window.billPayListComponent = Vue.extend({
         root: 'http://127.0.0.1/api'
     },
     created: function () {
+        var resource = this.$resource('bills{/id}');
+        resource.query().then(function (response) {
+            this.bills = response.data;
+        });
+        /*
         this.$http.get('bills').then(function (response) {
             this.bills = response.data;
         })
+        */
     },
     data: function () {
-        return {           
+        return {
             bills: []
         };
     },
     methods: {
         deleteBill: function (bill) {
             if (confirm("Deseja excluir esta conta?")) {
-                
+                var resource = this.$resource('bills{/id}');
+                resource.delete({ id: bill.id }).then(function (response) {
+                    this.bills.$remove(bill);
+                    this.$dispatch('change-status');
+                });
+                /*
                 this.$http.delete('bills/' + bill.id).then(function (response) {
                     this.bills.$remove(bill);
                     this.$dispatch('change-status');
                 });
+                */
             }
         }
     }

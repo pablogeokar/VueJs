@@ -47,13 +47,16 @@ window.billPayCreateComponent = Vue.extend({
     },
     methods: {
         submit: function () {
-            if (this.formType == 'INSERT') {                
-                this.$http.post('bills', this.bill).then(function (response) {
+            var resource = this.$resource('bills{/id}');
+            if (this.formType == 'INSERT') {
+                //this.$http.post('bills', this.bill).then(function (response) {
+                resource.save({}, this.bill).then(function (response) {
                     this.$dispatch('change-status');
                     this.$router.go({ name: 'bill-pay.list' });
                 });
             } else {
-                this.$http.put('bills/' + this.bill.id, this.bill).then(function (response) {
+                //this.$http.put('bills/' + this.bill.id, this.bill).then(function (response) {
+                resource.update({ id: this.bill.id }, this.bill).then(function (response) {
                     this.$dispatch('change-status');
                     this.$router.go({ name: 'bill-pay.list' });
                 });
@@ -61,7 +64,13 @@ window.billPayCreateComponent = Vue.extend({
 
         },
         getBill: function (id) {
-            this.$http.get('bills/' + id).then(function (response) {
+            var resource = this.$resource('bills{/id}');
+            /*
+            query - usa para consultar coleção inteira
+            get - usa para consultar um registro só
+            */
+            //this.$http.get('bills/' + id).then(function (response) {
+            resource.get({id: id}).then(function (response) {
                 this.bill = response.data;
             });
         }
