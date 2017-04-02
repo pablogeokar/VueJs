@@ -21,6 +21,7 @@ window.billPayComponent = Vue.extend({
  <div>
             <h1>{{ title }}</h1> 
             <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusPay }}</h3>            
+            <h3> {{ total | currency 'R$ '}} </h3>            
             <menu-component></menu-component>            
             <router-view></router-view>
         </div>
@@ -28,32 +29,16 @@ window.billPayComponent = Vue.extend({
     data: function () {
         return {
             title: "Contas a Pagar",
-            status: false
+            status: false,
+            total: 0
         }
     },
     computed: {
-        /*
-        status: function () {
-            var bills = this.$root.$children[0].billsPay;
-            
-            if (!bills.length) {
-                return false;
-            }
-            var count = 0;
-            for (var i in bills) {
-                if (!bills[i].done) {
-                    count++;
-                }
-            }
-            return count;
-        }
-        */
-    },
-    http: {
-        root: 'http://127.0.0.1/api'
+       
     },
     created: function() {
         this.updateStatus();
+        this.updateTotal();
     },
     methods: {
         calculeteStatus: function (bills) {         
@@ -70,19 +55,26 @@ window.billPayComponent = Vue.extend({
             this.status = count;
         },
         updateStatus: function(){
-            var resource = this.$resource('bills{/id}');
-            resource.query().then(function(response){
-                this.calculeteStatus(response.data);
+            //var resource = this.$resource('bills{/id}');
+            //resource.query().then(function(response){
+                var self = this;
+                Bill.query().then(function(response){
+                self.calculeteStatus(response.data);
             });
             
+        },
+        updateTotal : function(){
+            var self = this;
+            Bill.total().then(function(response){
+                self.total = response.data.total;
+            });
         }
     },
     events: {
-       'change-status' : function(){
+       'change-info' : function(){
            this.updateStatus();
+           this.updateTotal();
        }
     }
 });
 
-
-//Vue.component('app-component', appComponent);

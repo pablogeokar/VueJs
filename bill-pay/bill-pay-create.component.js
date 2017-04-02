@@ -14,10 +14,7 @@ window.billPayCreateComponent = Vue.extend({
                     <input type="checkbox" v-model="bill.done"><br/><br/>
                     <input type="button" value="Enviar" v-on:click="submit">
                 </form>
-`,
-    http: {
-        root: 'http://127.0.0.1/api'
-    },
+`,    
     data: function () {
         return {
             formType: "INSERT",
@@ -46,32 +43,30 @@ window.billPayCreateComponent = Vue.extend({
 
     },
     methods: {
-        submit: function () {
-            var resource = this.$resource('bills{/id}');
-            if (this.formType == 'INSERT') {
-                //this.$http.post('bills', this.bill).then(function (response) {
-                resource.save({}, this.bill).then(function (response) {
-                    this.$dispatch('change-status');
-                    this.$router.go({ name: 'bill-pay.list' });
+        submit: function () {           
+           var self = this;          
+            if (this.formType == 'INSERT') {                
+                Bill.save({}, this.bill).then(function (response) {
+                    self.$dispatch('change-info');
+                    self.$router.go({ name: 'bill-pay.list' });
                 });
-            } else {
-                //this.$http.put('bills/' + this.bill.id, this.bill).then(function (response) {
-                resource.update({ id: this.bill.id }, this.bill).then(function (response) {
-                    this.$dispatch('change-status');
-                    this.$router.go({ name: 'bill-pay.list' });
+            } else {                
+                Bill.update({ id: this.bill.id }, this.bill).then(function (response) {
+                    self.$dispatch('change-info');
+                    self.$router.go({ name: 'bill-pay.list' });
                 });
             }
 
         },
-        getBill: function (id) {
-            var resource = this.$resource('bills{/id}');
+        getBill: function (id) {            
+            var self = this;
             /*
             query - usa para consultar coleção inteira
             get - usa para consultar um registro só
             */
             //this.$http.get('bills/' + id).then(function (response) {
-            resource.get({id: id}).then(function (response) {
-                this.bill = response.data;
+            Bill.get({id: id}).then(function (response) {
+                self.bill = response.data;
             });
         }
 

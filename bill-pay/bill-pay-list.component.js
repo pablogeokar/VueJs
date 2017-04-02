@@ -36,13 +36,11 @@ window.billPayListComponent = Vue.extend({
                     </tbody>
                 </table>
 `,
-    http: {
-        root: 'http://127.0.0.1/api'
-    },
     created: function () {
-        var resource = this.$resource('bills{/id}');
-        resource.query().then(function (response) {
-            this.bills = response.data;
+        //var resource = this.$resource('bills{/id}');
+        var self = this;
+        Bill.query().then(function (response) {
+            self.bills = response.data;
         });
         /*
         this.$http.get('bills').then(function (response) {
@@ -58,10 +56,11 @@ window.billPayListComponent = Vue.extend({
     methods: {
         deleteBill: function (bill) {
             if (confirm("Deseja excluir esta conta?")) {
-                var resource = this.$resource('bills{/id}');
-                resource.delete({ id: bill.id }).then(function (response) {
-                    this.bills.$remove(bill);
-                    this.$dispatch('change-status');
+               // var resource = this.$resource('bills{/id}');
+               var self = this;
+                Bill.delete({ id: bill.id }).then(function (response) {
+                    self.bills.$remove(bill);
+                    self.$dispatch('change-info');
                 });
                 /*
                 this.$http.delete('bills/' + bill.id).then(function (response) {

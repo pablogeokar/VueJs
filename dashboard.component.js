@@ -2,16 +2,42 @@ window.dashboardComponent = Vue.extend({
     template: `
     <h1>Dashboard<h1>
     <h2>
-    Contas a Pagar: {{pays}}
+    Contas a Pagar: {{totalPay | currency 'R$ '}}
     </h2>
     <h2>
-    Contas a Receber: {{receives}}
+    Contas a Receber: {{totalReceive | currency 'R$ '}}
     </h2>
     `,
-   computed: {
+    data: function () {
+        return {
+            totalReceive: 0,
+            totalPay: 0
+        }
+    },
+    created: function () {
+        this.TotalReceive();
+        this.TotalPay();
+    },
+    methods: {
+        TotalReceive: function () {
+            var self = this;
+          BillReceive.total().then(function(response){
+                self.totalReceive = response.data.total;
+            });
+        },
+        TotalPay: function () {
+            var self = this;
+          Bill.total().then(function(response){
+                self.totalPay = response.data.total;
+            });
+        }
+    },
+    
+    computed: {
         pays: function () {
+            /*
             var bills = this.$root.$children[0].billsPay;
-
+ 
             if (!bills.length) {
                 return false;
             }
@@ -22,10 +48,13 @@ window.dashboardComponent = Vue.extend({
                 }
             }
             return count;
+            */
+
         },
         receives: function () {
+            /*
             var bills = this.$root.$children[0].billsReceive;
-
+ 
             if (!bills.length) {
                 return false;
             }
@@ -36,6 +65,7 @@ window.dashboardComponent = Vue.extend({
                 }
             }
             return count;
+            */
         }
     }
 
