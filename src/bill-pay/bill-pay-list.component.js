@@ -10,10 +10,10 @@ window.billPayListComponent = Vue.extend({
  </style>    
      <div class="container">
         <div class="row">
-            <div class="col s6">
+            <div class="col s2 m10">
                 Teste
             </div>
-            <div class="col s6">
+            <div class="col s10 m2">
                 Teste 2
             </div>
         </div>
