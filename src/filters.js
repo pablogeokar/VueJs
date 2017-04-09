@@ -89,6 +89,8 @@ Vue.filter('dateFormat', {
 Vue.filter('text_upper',{
     read(value){
         return value.toUpperCase();
+    },
+    write(value){
+        return value;
     }
-
 });

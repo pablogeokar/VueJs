@@ -3,7 +3,7 @@
 var names = ["Conta de luz", "Conta de água", "Conta de telefone", "Supermercado", "Cartão de Crédito", "Empréstimo", "Gasolina"];
 
 window.billPayCreateComponent = Vue.extend({
-    template: "\n<div class=\"container\">      \n    <form name=\"form\" @submit.prevent=\"submit\">\n\n        <div class=\"row\">\n            <div class=\"input-field col s4\"> \n                <label>Vencimento:</label>\n                <input type=\"text\" v-model=\"bill.date_due | dateFormat 'pt-BR'\" placeholder=\"Informe a Data\">\n            </div>\n\n            <div class=\"input-field col s4\">        \n                <label>valor:</label>\n                <input type=\"text\" v-model=\"bill.value | numberFormat 'pt-BR'\"><br/><br/>\n            </div>\n        </div>\n\n        <div class=\"row\">\n            <!--<div>-->\n                <label>Nome:</label>\n                <select v-model=\"bill.name\" id=\"name\">        \n                    <option v-for=\"o in names\" :value=\"o\">{{ o }}</option>\n                </select>\n            <!--</div>-->\n        </div>       \n\n        <div class=\"row\">        \n            <label>Pago?</label>\n            <input type=\"checkbox\" v-model=\"bill.done\"><br/><br/>\n        </div>\n\n        <div class=\"row\">        \n            <input type=\"button\" value=\"Enviar\" v-on:click=\"submit\">\n        </div>        \n    </form>\n</div>\n",
+    template: "\n<div class=\"container\">      \n    <form name=\"form\" @submit.prevent=\"submit\">\n\n        <div class=\"row\">\n            <div class=\"input-field col s4\"> \n                <label>Vencimento:</label>\n                <input type=\"text\" v-model=\"bill.date_due | dateFormat 'pt-BR'\" placeholder=\"Informe a Data\">\n            </div>\n\n            <div class=\"input-field col s4\">        \n                <label>valor:</label>\n                <input type=\"text\" v-model=\"bill.value | numberFormat 'pt-BR'\"><br/><br/>\n            </div>\n        </div>\n\n        <div class=\"row\">            \n            <label>Nome:</label>\n            <select v-model=\"bill.name\" id=\"name\">        \n                <option value=\"\" disabled select>Escolha uma conta</option>\n                <option v-for=\"o in names\" :value=\"o\">{{o}}</option>\n            </select>            \n        </div>       \n\n        <div class=\"row\">        \n            <label>Pago?</label>            \n            <input type=\"checkbox\" v-model=\"bill.done\"><br/><br/>\n        </div>\n\n        <div class=\"row\">        \n            <input type=\"button\" value=\"Enviar\" v-on:click=\"submit\">\n        </div>        \n    </form>\n</div>\n",
     data: function data() {
         return {
             formType: "INSERT",
@@ -16,7 +16,9 @@ window.billPayCreateComponent = Vue.extend({
             this.formType = 'UPDATE';
             this.getBill(this.$route.params.id);
         };
-        $(document).ready(function () {});
+        $(document).ready(function () {
+            $('#name').material_select();
+        });
     },
 
     methods: {

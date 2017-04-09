@@ -25,17 +25,16 @@ window.billPayCreateComponent = Vue.extend({
             </div>
         </div>
 
-        <div class="row">
-            <!--<div>-->
-                <label>Nome:</label>
-                <select v-model="bill.name" id="name">        
-                    <option v-for="o in names" :value="o">{{ o }}</option>
-                </select>
-            <!--</div>-->
+        <div class="row">            
+            <label>Nome:</label>
+            <select v-model="bill.name" id="name">        
+                <option value="" disabled select>Escolha uma conta</option>
+                <option v-for="o in names" :value="o">{{o}}</option>
+            </select>            
         </div>       
 
         <div class="row">        
-            <label>Pago?</label>
+            <label>Pago?</label>            
             <input type="checkbox" v-model="bill.done"><br/><br/>
         </div>
 
@@ -58,7 +57,7 @@ window.billPayCreateComponent = Vue.extend({
             this.getBill(this.$route.params.id);
         };
         $(document).ready(function(){
-
+            $('#name').material_select();
         });
     },
     methods: {
