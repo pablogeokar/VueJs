@@ -12,7 +12,7 @@ window.billComponent = Vue.extend({
     </li>
 </ul>
 <div class="navbar-fixed">
-    <nav class="teal">
+    <nav class="teal lighten-1">
         <div class="nav-wrapper container" >                    
             <a href="#" class="right brand-logo">Code Contas</a>
             <a href="#" data-activates="nav-mobile" class="button-collapse">
