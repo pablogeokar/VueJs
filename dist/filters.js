@@ -32,19 +32,23 @@ Vue.filter('statusReceive', function (value) {
 
 //Formata Moeda
 Vue.filter('numberFormat', {
-    read: function read(value) {
+    read: function read(value, locale) {
         //mostrar a informação na tela       
         var number = 0;
         if (value && (typeof value === "undefined" ? "undefined" : _typeof(value)) !== undefined) {
             var numberRegex = value.toString().match(/\d+(\.{1}\d{1,2}){0,1}/g);
             number = numberRegex ? numberRegex[0] : numberRegex;
         }
-        return new Intl.NumberFormat('pt-BR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-            style: 'currency',
-            currency: 'BRL'
-        }).format(number);
+        if (locale == 'pt-BR') {
+            return new Intl.NumberFormat(locale, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+                style: 'currency',
+                currency: 'BRL'
+            }).format(number);
+        } else {
+            return number;
+        }
     },
     write: function write(value) {
         //salva a informação da tela
@@ -59,7 +63,7 @@ Vue.filter('numberFormat', {
 
 //Formata Data
 Vue.filter('dateFormat', {
-    read: function read(value) {
+    read: function read(value, locale) {
         //mostrar a informação na tela
         if (value && (typeof value === "undefined" ? "undefined" : _typeof(value)) !== undefined) {
             if (!(value instanceof Date)) {
@@ -71,7 +75,9 @@ Vue.filter('dateFormat', {
                     return value;
                 }
             }
-            return new Intl.DateTimeFormat('pt-BR').format(value).split(' ')[0];
+            if (locale == 'pt-BR') {
+                return new Intl.DateTimeFormat(locale).format(value).split(' ')[0];
+            }
         }
         return value;
     },
@@ -86,5 +92,11 @@ Vue.filter('dateFormat', {
             }
         }
         return value;
+    }
+});
+
+Vue.filter('text_upper', {
+    read: function read(value) {
+        return value.toUpperCase();
     }
 });

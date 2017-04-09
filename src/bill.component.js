@@ -8,12 +8,14 @@ window.billComponent = Vue.extend({
                     </li>
                 </ul>
             </nav>
-            <router-view></router-view>
+             <div class="container">           
+            <router-view></router-view>            
+            </div>
     `,
     data() {
         return {
-            menus: [                
-                 { name: "Dashboard", routeName: 'dashboard' },
+            menus: [
+                { name: "Dashboard", routeName: 'dashboard' },
                 { name: "Contas a Pagar", routeName: 'bill-pay.list' },
                 { name: "Contas a Receber", routeName: 'bill-receive.list' },
             ],

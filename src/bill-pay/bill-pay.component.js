@@ -21,9 +21,9 @@ window.billPayComponent = Vue.extend({
  <div>
             <h1>{{ title }}</h1> 
             <h3 :class="{ 'gray': status === false, 'green': status === 0, 'red': status >0 }">{{ status | statusPay }}</h3>            
-            <h3> {{ total | numberFormat}} </h3>            
-            <menu-component></menu-component>            
-            <router-view></router-view>
+            <h3> {{ total | numberFormat 'pt-BR'}} </h3>            
+            <menu-component></menu-component>             
+            <router-view></router-view>            
         </div>
   `,
     data() {

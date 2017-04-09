@@ -10,31 +10,28 @@ const names = [
 
 window.billPayCreateComponent = Vue.extend({
     template: `
+     <div class="container">      
 <form name="form" @submit.prevent="submit">
                     <label>Vencimento:</label>
-                    <input type="text" v-model="bill.date_due | dateFormat"><br/><br/>
+                    <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'"><br/><br/>
                     <label>Nome:</label>
                     <select v-model="bill.name">
                         <option v-for="o in names" :value="o">{{ o }}</option>
                     </select>
                     <br/><br/>
                     <label>valor:</label>
-                    <input type="text" v-model="bill.value | numberFormat"><br/><br/>
+                    <input type="text" v-model="bill.value | numberFormat 'pt-BR'"><br/><br/>
                      <label>Pago?</label>
                     <input type="checkbox" v-model="bill.done"><br/><br/>
                     <input type="button" value="Enviar" v-on:click="submit">
                 </form>
+                </div>
 `,
     data() {
         return {
             formType: "INSERT",
             names: names,
-            bill: {
-                date_due: "",
-                name: "",
-                value: 0,
-                done: false
-            }
+            bill: new BillPay(),
         };
     },
     created() {
@@ -42,11 +39,11 @@ window.billPayCreateComponent = Vue.extend({
             this.formType = 'UPDATE';
             this.getBill(this.$route.params.id);
         }
-
     },
     methods: {
         submit() {
-            let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill.toJSON();            
+            //let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'INSERT') {
                 Bill.save({}, data).then((response) => {
                     this.$dispatch('change-info');
@@ -60,15 +57,16 @@ window.billPayCreateComponent = Vue.extend({
             }
 
         },
-        getBill(id) {                        
+        getBill(id) {
             Bill.get({ id: id }).then((response) => {
-                this.bill = response.data;
+                //this.bill = response.data;
+                this.bill = new BillPay(response.data);
             });
         },
-        getDateDue(date_due){
+        getDateDue(date_due) {
             let date_dueObject = date_due;
-            if(!(date_due instanceof Date)){
-                date_dueObject = new Date(dateString.split('/').reverse().join('-')+"T03:00:00");
+            if (!(date_due instanceof Date)) {
+                date_dueObject = new Date(dateString.split('/').reverse().join('-') + "T03:00:00");
             }
             return date_dueObject.toISOString().split('T')[0];
         }

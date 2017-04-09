@@ -26,18 +26,22 @@ Vue.filter('statusReceive', (value) => {
 
 //Formata Moeda
 Vue.filter('numberFormat', {
-    read(value) { //mostrar a informação na tela       
+    read(value, locale) { //mostrar a informação na tela       
         var number = 0;
         if (value && typeof value !== undefined) {
             var numberRegex = value.toString().match(/\d+(\.{1}\d{1,2}){0,1}/g);
             number = numberRegex ? numberRegex[0] : numberRegex;
         }
-        return new Intl.NumberFormat('pt-BR', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-            style: 'currency',
-            currency: 'BRL'
-        }).format(number);
+        if (locale == 'pt-BR') {
+            return new Intl.NumberFormat(locale, {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+                style: 'currency',
+                currency: 'BRL'
+            }).format(number);
+        } else {
+            return number;
+        }
     },
     write(value) { //salva a informação da tela
         var number = 0;
@@ -52,7 +56,7 @@ Vue.filter('numberFormat', {
 
 //Formata Data
 Vue.filter('dateFormat', {
-    read(value) { //mostrar a informação na tela
+    read(value, locale) { //mostrar a informação na tela
         if (value && typeof value !== undefined) {
             if (!(value instanceof Date)) {
                 var dateRegex = value.match(/\d{4}\-\d{2}\-\d{2}/g);
@@ -63,19 +67,28 @@ Vue.filter('dateFormat', {
                     return value;
                 }
             }
-            return new Intl.DateTimeFormat('pt-BR').format(value).split(' ')[0];
+            if (locale == 'pt-BR'){
+                return new Intl.DateTimeFormat(locale).format(value).split(' ')[0];
+            }
         }
         return value;
     },
     write(value) { //salva a informação da tela
         var dateRegex = value.match(/\d{2}\/\d{2}\/\d{4}/g);
-        if(dateRegex){
+        if (dateRegex) {
             var dateString = dateRegex[0];
-            var date = new Date(dateString.split('/').reverse().join('-')+"T03:00:00");
-            if(!isNaN(date.getTime())){
+            var date = new Date(dateString.split('/').reverse().join('-') + "T03:00:00");
+            if (!isNaN(date.getTime())) {
                 return date;
             }
         }
         return value;
     }
+});
+
+Vue.filter('text_upper',{
+    read(value){
+        return value.toUpperCase();
+    }
+
 });

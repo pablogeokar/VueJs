@@ -19,7 +19,7 @@ router.map({
             },
         }
     },
-    '/bill-receives': {        
+    '/bill-receives': {
         component: billReceiveComponent,
         subRoutes: {
             '/': {
@@ -29,16 +29,16 @@ router.map({
             '/create': {
                 name: 'bill-receive.create',
                 component: billReceiveCreateComponent
-            },           
-                '/:id/update': {
+            },
+            '/:id/update': {
                 name: 'bill-receive.update',
                 component: billReceiveCreateComponent
             }
         }
     },
-    '/dashboard':{
+    '/dashboard': {
         name: 'dashboard',
-        component: dashboardComponent        
+        component: dashboardComponent
     },
     '*': {
         component: billPayListComponent
@@ -48,8 +48,8 @@ router.map({
 
 router.start({
     components: {
-      //  'main-component': mainComponent //cOMENTAR PARA FUNCIONAR A API
-      'bill-component': billComponent //DESCOMENTAR PARA FUNCIONAR A API
+        //  'main-component': mainComponent //cOMENTAR PARA FUNCIONAR A API
+        'bill-component': billComponent //DESCOMENTAR PARA FUNCIONAR A API
     },
 
 }, '#app')
@@ -59,6 +59,46 @@ router.start({
 router.redirect({
     '*': '/dashboard'
 })
+
+/*
+class Bills {
+    constructor(id, name) {
+        this._id = id;
+        this._name = name;
+    }
+
+    showVariables(texto = "Nenhum Nome") {
+        console.log(this.id);
+        console.log(this.name);
+        console.log(texto);
+    }
+
+    get id() { return this._id };
+    get name() { return this._name };
+
+    set id(id) { return this._id = id };
+    set name(name) { return this._name = name };
+}
+
+
+class BillPay extends Bills {
+    constructor(id, name, pago){
+        super(id, name)
+        this._pago = pago;
+    }
+
+    get pago(){return this._pago};
+    set pago(pago){return this._pago = pago};
+}
+
+let bill = new BillPay(1, "Supermercado", true);
+bill.id = 1000;
+bill.name = "Fatura de Cartão de Crédito";
+console.log(bill.id);
+console.log(bill.name);
+console.log(bill.pago);
+*/
+
 
 
 
