@@ -12,34 +12,39 @@ window.billPayCreateComponent = Vue.extend({
     template: `
 <div class="container">      
     <form name="form" @submit.prevent="submit">
-
         <div class="row">
-            <div class="input-field col s4"> 
-                <label>Vencimento:</label>
+        <h2>Nova Conta</h2>
+            <div class="input-field col s6"> 
+                <label class="active">Vencimento:</label>
+                <!-- <input type="date" class="datepicker" v-model="bill.date_due | dateFormat 'pt-BR'">-->
                 <input type="text" v-model="bill.date_due | dateFormat 'pt-BR'" placeholder="Informe a Data">
             </div>
 
-            <div class="input-field col s4">        
-                <label>valor:</label>
+            <div class="input-field col s6">        
+                <label class="active">valor:</label>
                 <input type="text" v-model="bill.value | numberFormat 'pt-BR'"><br/><br/>
             </div>
         </div>
 
         <div class="row">            
-            <label>Nome:</label>
-            <select v-model="bill.name" id="name">        
-                <option value="" disabled select>Escolha uma conta</option>
-                <option v-for="o in names" :value="o">{{o}}</option>
-            </select>            
-        </div>       
+            <div class="input-field col s6">
+                <label class="active">Nome:</label>
+                <select v-model="bill.name" id="name" class="browser-default">        
+                    <option value="" disabled selected>Escolha uma conta</option>
+                    <option v-for="o in names" :value="o">{{o}}</option>
+                </select>            
+            </div>
+
+            <div class="input-field col s6">
+                <input type="checkbox" v-model="bill.done" id="pago">
+                <label for="pago">Pago?</label> 
+            </div>
+        </div>               
 
         <div class="row">        
-            <label>Pago?</label>            
-            <input type="checkbox" v-model="bill.done"><br/><br/>
+        <div class="input-field col s12">
+            <input type="button" value="Enviar" v-on:click="submit" class="btn btn-large right">
         </div>
-
-        <div class="row">        
-            <input type="button" value="Enviar" v-on:click="submit">
         </div>        
     </form>
 </div>
@@ -56,13 +61,13 @@ window.billPayCreateComponent = Vue.extend({
             this.formType = 'UPDATE';
             this.getBill(this.$route.params.id);
         };
-        $(document).ready(function(){
-            $('#name').material_select();
+        $(document).ready(function () {
+            $('#name').material_select();            
         });
     },
     methods: {
         submit() {
-            let data = this.bill.toJSON();            
+            let data = this.bill.toJSON();
             //let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'INSERT') {
                 Bill.save({}, data).then((response) => {
