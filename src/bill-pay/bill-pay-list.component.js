@@ -1,14 +1,14 @@
 window.billPayListComponent = Vue.extend({
     template: `
-  <div class="container">
+    <div class="container">
     <div class="row">
-    <h2>Minhas Contas a Pagar</h2>
+        <h2>Minhas Contas a Pagar</h2>
         <table class="bordered striped highlight centered responsive-table z-depth-5">
             <thead>
                 <tr>
                     <th>#</th>
                     <th>Vencimento</th>
-                    <th>Nome</th>
+                    <th>Nome</th>                    
                     <th>Valor</th>
                     <th>Paga?</th>
                     <th>Ações</th>
@@ -21,23 +21,40 @@ window.billPayListComponent = Vue.extend({
                     <td>{{ o.name | text_upper }}</td>
                     <td align="right">{{ o.value | numberFormat 'pt-BR'}}</td>
                     <td class="white-text" :class="{'green lighten-2' : o.done, 'red lighten-2' : !o.done}">
-                    {{ o.done | doneLabel }}
+                        {{ o.done | doneLabel }}
                     </td>
                     <td>
-                    <a v-link="{ name: 'bill-pay.update', params: {id: o.id} }">Editar</a> |
-                    <a href="#" @click.prevent="deleteBill(o)">Excluir</a>                                
+                        <a v-link="{ name: 'bill-pay.update', params: {id: o.id} }">Editar</a> |
+                        <a href="#" @click.prevent="deleteBill(o)">Excluir</a>
                     </td>
                 </tr>
             </tbody>
-        </table>        
-    </div>        
-</div> 
+        </table>
+    </div>
+</div>
+
+<a href='#meu-modal' id="btnmodal" class="btn waves-effect">Abrir Modal</a>
+<div class="modal" id="meu-modal">
+    <div class="modal-content">
+        <h2>Meu primeiro Modal</h2>
+        <p>TExto teste</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-flat green">OK</button>
+    </div>    
+</div>
+
  `
     ,
     created() {
         Bill.query().then((response) => {
             this.bills = response.data;
         });
+            
+        $(document).ready(function(){
+            $('#btnmodal').leanModal();
+        });
+        
     },
     data() {
         return {
