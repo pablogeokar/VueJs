@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel src --out-dir dist --watch"
+    "babel": "babel src --out-dir dist --watch",    
+    "sass": "node-sass ./src/sass -o ./dist/css",
+    "sass:w": "node-sass ./src/sass -o ./dist/css -w",
+    "start": "concurrently \"npm run babel\" \"npm run sass\" \"npm run sass:w\" \"lite-server\""
   },
   "repository": {
     "type": "git",
