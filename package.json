@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "babel": "babel src --out-dir dist --watch",    
+    "babel": "babel src --out-dir dist --watch",
     "sass": "node-sass ./src/sass -o ./dist/css",
     "sass:w": "node-sass ./src/sass -o ./dist/css -w",
-    "start": "concurrently \"npm run babel\" \"npm run sass\" \"npm run sass:w\" \"lite-server\""
+    "start": "concurrently \"npm run babel\" \"npm run sass\" \"npm run sass:w\" \"gulp\" \"lite-server\""
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,8 @@
     "vue": "^1.0.28",
     "vue-resource": "^1.2.1",
     "vue-router": "0.7.13"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }
