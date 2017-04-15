@@ -8,6 +8,18 @@
 @import "node_modules/materialize-css/sass/materialize";
 
 //Minhas Classes
-.my-custom-green{
-    @extend .green, .darken-1
+.my-custom-modal{
+    width: 45%;
+};
+
+#app{
+    background-color: #eceff1;
+};
+
+.card-content{    
+    background-color: #e0e0e0;
 }
+
+
+
+

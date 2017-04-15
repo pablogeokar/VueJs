@@ -1,10 +1,7 @@
-'use strict';
+"use strict";
 
 window.billReceiveComponent = Vue.extend({
-    components: {
-        'menu-component': billReceiveMenuComponent
-    },
-    template: '    \n  <style type="text/css">            \n            .red{\n                color: red;\n            }\n            .green{\n                color: green;\n            }\n            .gray{\n                color: gray;\n            }\n            .minha-classe{\n                background-color: burlywood;\n            }\n        </style>\n\n <div>\n            <h1>{{ title }}</h1> \n            <h3 :class="{ \'gray\': status === false, \'green\': status === 0, \'red\': status >0 }">{{ status | statusReceive }}</h3>            \n            <h3> {{ total | numberFormat \'pt-BR\'}} </h3>            \n            <menu-component></menu-component>\n            <router-view></router-view>\n        </div>    \n       \n  ',
+    template: "\n<div class=\"section\">\n    <div class=\"container\">\n        <h4 class=\"teal-text text-darken-3\">{{ title }}</h4>\n        <div class=\"row\">\n            <div class=\"col s6\">\n                <div class=\"card z-depth-2\">\n                    <div class=\"card-content white-text\" :class=\"{ 'gray': status === false, 'green': status === 0, 'red': status >0 }\">\n                        <p class=\"card-title\">\n                            <i class=\"material-icons\">account_balance</i>\n                        </p>\n                        <h4>{{ status | statusReceive }}</h4>\n                    </div>\n                </div>\n            </div>\n            <div class=\"col s6\">\n            <div class=\"card z-depth-2\">\n                    <div class=\"card-content\" >\n                        <p class=\"card-title\">\n                            <i class=\"material-icons\">payment</i>\n                        </p>\n                        <h4> {{ total | numberFormat 'pt-BR'}} </h4>\n                    </div>\n                </div>\n            </div>            \n        </div>\n    </div>\n</div>\n<div class=\"divider\"></div>\n<router-view></router-view>           \n  ",
     data: function data() {
         return {
             status: false,

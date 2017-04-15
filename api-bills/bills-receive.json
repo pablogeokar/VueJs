@@ -1,1 +1,1 @@
-{"bills-receive":[{"date_due":"05\/04\/2017","name":"Gasolina","value":1.23,"done":false,"id":2048},{"date_due":"05\/04\/2017","name":"Cart\u00e3o de Cr\u00e9dito","value":5,"done":true,"id":2115},{"date_due":"01\/04\/2018","name":"Conta de telefone","value":74,"done":false,"id":38379}]}
+{"bills-receive":[{"date_due":"2017-04-01T03:00:00.000Z","name":"Conta de Luz","value":150,"done":true,"id":23797}]}
