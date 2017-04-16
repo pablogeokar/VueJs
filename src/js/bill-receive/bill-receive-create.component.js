@@ -1,14 +1,14 @@
 const names = [
-                "Conta de Luz",
-                "Conta de Água",
-                "Conta de telefone",
-                "Supermercado",
-                "Cartão de Crédito",
-                "Empréstimo",
-                "Gasolina"
-            ];
+    "Conta de Luz",
+    "Conta de Água",
+    "Conta de telefone",
+    "Supermercado",
+    "Cartão de Crédito",
+    "Empréstimo",
+    "Gasolina"
+];
 
-window.billReceiveCreateComponent = Vue.extend({
+module.exports = {
     template: `
 <div class="container">      
     <form name="form" @submit.prevent="submit">
@@ -49,7 +49,7 @@ window.billReceiveCreateComponent = Vue.extend({
     </form>
 </div>
 `,
-    data() {
+        data() {
         return {
             formType: "INSERT",
             names: names,
@@ -92,4 +92,4 @@ window.billReceiveCreateComponent = Vue.extend({
         }
 
     }
-});
+};

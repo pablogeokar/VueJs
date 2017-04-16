@@ -1,4 +1,4 @@
-window.billReceiveComponent = Vue.extend({    
+module.exports = {
     template: `
 <div class="section">
     <div class="container">
@@ -45,10 +45,10 @@ window.billReceiveComponent = Vue.extend({
         this.updateTotal();
     },
     methods: {
-        calculeteStatus(bills) {         
+        calculeteStatus(bills) {
 
             if (!bills.length) {
-                this.status = false;                
+                this.status = false;
             }
             var count = 0;
             for (var i in bills) {
@@ -58,26 +58,26 @@ window.billReceiveComponent = Vue.extend({
             }
             this.status = count;
         },
-        updateStatus(){            
-                var self = this;
-                BillReceive.query().then(function(response){
+        updateStatus() {
+            var self = this;
+            BillReceive.query().then(function (response) {
                 self.calculeteStatus(response.data);
             });
-            
+
         },
-        updateTotal(){
+        updateTotal() {
             var self = this;
-            BillReceive.total().then(function(response){
+            BillReceive.total().then(function (response) {
                 self.total = response.data.total;
             });
         }
     },
     events: {
-       'change-info'(){
-           this.updateStatus();
-           this.updateTotal();
-       }
+        'change-info'() {
+            this.updateStatus();
+            this.updateTotal();
+        }
     }
 
-});
+};
 

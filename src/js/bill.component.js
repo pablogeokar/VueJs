@@ -1,5 +1,5 @@
-window.billComponent = Vue.extend({
-    components:{
+module.exports = {
+    components: {
         'modal': window.modalComponent
     },
     template:
@@ -65,4 +65,4 @@ window.billComponent = Vue.extend({
             ]
         };
     }
-});
+};

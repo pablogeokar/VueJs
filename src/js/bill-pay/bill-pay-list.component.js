@@ -1,4 +1,6 @@
-window.billPayListComponent = Vue.extend({
+let modalComponent = require('../modal-component');
+
+module.exports = {
     components: {
         'modal': modalComponent
     },
@@ -76,7 +78,7 @@ window.billPayListComponent = Vue.extend({
             Bill.delete({ id: this.billToDelete }).then((response) => {
                 this.bills.$remove(this.billToDelete);
                 this.billToDelete = null;
-                Materialize.toast("Conta excluída com sucesso", 4000);    
+                Materialize.toast("Conta excluída com sucesso", 4000);
                 this.$dispatch('change-info');
             });
 
@@ -87,4 +89,4 @@ window.billPayListComponent = Vue.extend({
             $('#modal-delete').modal('open');
         }
     }
-});
+};

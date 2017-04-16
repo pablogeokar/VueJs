@@ -1,4 +1,4 @@
-window.dashboardComponent = Vue.extend({
+module.exports = {
     template: `
     <h1>Dashboard<h1>
     <h2>
@@ -34,4 +34,4 @@ window.dashboardComponent = Vue.extend({
     },   
     
 
-});
+};

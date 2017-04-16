@@ -8,7 +8,7 @@ const names = [
     "Gasolina"
 ];
 
-window.billPayCreateComponent = Vue.extend({
+module.exports = {
     template: `
 <div class="container">      
     <form name="form" @submit.prevent="submit">
@@ -62,7 +62,7 @@ window.billPayCreateComponent = Vue.extend({
             this.getBill(this.$route.params.id);
         };
         $(document).ready(function () {
-            $('#name').material_select();            
+            $('#name').material_select();
         });
     },
     methods: {
@@ -71,13 +71,13 @@ window.billPayCreateComponent = Vue.extend({
             //let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'INSERT') {
                 Bill.save({}, data).then((response) => {
-                    Materialize.toast("Conta criada com sucesso", 4000);    
+                    Materialize.toast("Conta criada com sucesso", 4000);
                     this.$dispatch('change-info');
                     this.$router.go({ name: 'bill-pay.list' });
                 });
             } else {
                 Bill.update({ id: this.bill.id }, data).then((response) => {
-                    Materialize.toast("Conta atualizada com sucesso", 4000);    
+                    Materialize.toast("Conta atualizada com sucesso", 4000);
                     this.$dispatch('change-info');
                     this.$router.go({ name: 'bill-pay.list' });
                 });
@@ -99,4 +99,4 @@ window.billPayCreateComponent = Vue.extend({
         }
 
     }
-});
+};

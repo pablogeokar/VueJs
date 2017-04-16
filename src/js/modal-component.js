@@ -1,4 +1,4 @@
-window.modalComponent = Vue.extend({
+module.exports = {
     template:
     `
         <div :id="modal.id" class="modal my-custom-modal">
@@ -10,7 +10,7 @@ window.modalComponent = Vue.extend({
             </div>
         </div>            
     `,
-    props:['modal'],
+    props: ['modal'],
     data() {
         return {
             modal: {
@@ -18,4 +18,4 @@ window.modalComponent = Vue.extend({
             }
         }
     }
-});
+};

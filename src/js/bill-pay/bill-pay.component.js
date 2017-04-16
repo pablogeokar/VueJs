@@ -1,4 +1,4 @@
-window.billPayComponent = Vue.extend({    
+module.exports = {
     template: `
 <div class="section">
     <div class="container">
@@ -38,17 +38,17 @@ window.billPayComponent = Vue.extend({
         }
     },
     computed: {
-       
+
     },
     created() {
         this.updateStatus();
         this.updateTotal();
     },
     methods: {
-        calculeteStatus(bills) {         
+        calculeteStatus(bills) {
 
             if (!bills.length) {
-                this.status = false;                
+                this.status = false;
             }
             let count = 0;
             for (let i in bills) {
@@ -58,25 +58,25 @@ window.billPayComponent = Vue.extend({
             }
             this.status = count;
         },
-        updateStatus(){            
-                let self = this;
-                Bill.query().then((response) =>{
+        updateStatus() {
+            let self = this;
+            Bill.query().then((response) => {
                 self.calculeteStatus(response.data);
             });
-            
+
         },
-        updateTotal(){
+        updateTotal() {
             let self = this;
-            Bill.total().then((response) =>{
+            Bill.total().then((response) => {
                 self.total = response.data.total;
             });
         }
     },
     events: {
-       'change-info'(){
-           this.updateStatus();
-           this.updateTotal();
-       }
+        'change-info'() {
+            this.updateStatus();
+            this.updateTotal();
+        }
     }
-});
+};
 
