@@ -1,4 +1,5 @@
 
+//require('style!css!');
 require('./bill');
 require('./filters');
 require('./resources');
@@ -9,8 +10,8 @@ require([
     './bill-receive/bill-receive.component',
     './bill-receive/bill-receive-list.component',
     './bill-receive/bill-receive-create.component',
+    './dashboard.component',
     './bill.component',
-    './dashboard.component'
 ],
     function (
         billPayComponent,
@@ -19,8 +20,8 @@ require([
         billReceiveComponent,
         billReceiveListComponent,
         billReceiveCreateComponent,
-        billComponent,
-        dashboardComponent
+        dashboardComponent,
+        billComponent
     ) {
         let router = new VueRouter();
 
@@ -70,7 +71,7 @@ require([
         });
 
         router.start({
-            components: {                
+            components: {
                 'bill-component': billComponent
             },
 

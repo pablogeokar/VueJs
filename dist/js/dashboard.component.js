@@ -1,6 +1,6 @@
 "use strict";
 
-window.dashboardComponent = Vue.extend({
+module.exports = {
     template: "\n    <h1>Dashboard<h1>\n    <h2>\n    Contas a Pagar: {{totalPay | numberFormat 'pt-BR'}}\n    </h2>\n    <h2>\n    Contas a Receber: {{totalReceive | numberFormat 'pt-BR'}}\n    </h2>\n    ",
     data: function data() {
         return {
@@ -27,4 +27,4 @@ window.dashboardComponent = Vue.extend({
         }
     }
 
-});
+};

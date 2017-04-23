@@ -1,7 +1,4 @@
 module.exports = {
-    components: {
-        'modal': window.modalComponent
-    },
     template:
     `
 <ul v-bind:id="o.id" class="dropdown-content" v-for="o in menusDropdown">
@@ -31,8 +28,7 @@ module.exports = {
             </ul>                                                            
         </div>        
     </nav>                       
-</div>
-<modal></modal>            
+</div>         
 <router-view></router-view>            
             
     `,

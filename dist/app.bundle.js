@@ -154,11 +154,15 @@
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var BillPay = function () {
+var BillPay = exports.BillPay = function () {
     function BillPay() {
         var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
@@ -330,10 +334,11 @@ window.BillReceive = Vue.resource('bills-receive{/id}', {}, {
 "use strict";
 
 
+//require('style!css!');
 __webpack_require__(0);
 __webpack_require__(1);
 __webpack_require__(2);
-__webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(5), __webpack_require__(4), __webpack_require__(3), __webpack_require__(8), __webpack_require__(7), __webpack_require__(6), __webpack_require__(9), __webpack_require__(10)]; (function (billPayComponent, billPayListComponent, billPayCreateComponent, billReceiveComponent, billReceiveListComponent, billReceiveCreateComponent, billComponent, dashboardComponent) {
+__webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIRE_ARRAY__ = [__webpack_require__(5), __webpack_require__(4), __webpack_require__(3), __webpack_require__(8), __webpack_require__(7), __webpack_require__(6), __webpack_require__(10), __webpack_require__(9)]; (function (billPayComponent, billPayListComponent, billPayCreateComponent, billReceiveComponent, billReceiveListComponent, billReceiveCreateComponent, dashboardComponent, billComponent) {
     var router = new VueRouter();
 
     router.map({
@@ -383,14 +388,12 @@ __webpack_require__.e/* require */(0).then(function() { var __WEBPACK_AMD_REQUIR
 
     router.start({
         components: {
-            //  'main-component': mainComponent //cOMENTAR PARA FUNCIONAR A API
-            'bill-component': billComponent //DESCOMENTAR PARA FUNCIONAR A API
+            'bill-component': billComponent
         }
 
     }, '#app');
 
     /*Conserta erros de endereço e redireciona para rota padrão*/
-
     router.redirect({
         '*': '/dashboard'
     });
