@@ -1,3 +1,4 @@
+require('../bill');
 const names = [
     "Conta de luz",
     "Conta de água",
@@ -67,8 +68,7 @@ module.exports = {
     },
     methods: {
         submit() {
-            let data = this.bill.toJSON();
-            //let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
+            let data = this.bill.toJSON();            
             if (this.formType == 'INSERT') {
                 Bill.save({}, data).then((response) => {
                     Materialize.toast("Conta criada com sucesso", 4000);
@@ -85,8 +85,7 @@ module.exports = {
 
         },
         getBill(id) {
-            Bill.get({ id: id }).then((response) => {
-                //this.bill = response.data;
+            Bill.get({ id: id }).then((response) => {                
                 this.bill = new BillPay(response.data);
             });
         },

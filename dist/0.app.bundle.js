@@ -1,13 +1,12 @@
-webpackJsonp([0],[
-/* 0 */,
-/* 1 */,
-/* 2 */,
-/* 3 */
+webpackJsonp([0],{
+
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+__webpack_require__(1);
 var names = ["Conta de luz", "Conta de água", "Conta de telefone", "Supermercado", "Cartão de Crédito", "Empréstimo", "Gasolina"];
 
 module.exports = {
@@ -34,7 +33,6 @@ module.exports = {
             var _this = this;
 
             var data = this.bill.toJSON();
-            //let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'INSERT') {
                 Bill.save({}, data).then(function (response) {
                     Materialize.toast("Conta criada com sucesso", 4000);
@@ -53,7 +51,6 @@ module.exports = {
             var _this2 = this;
 
             Bill.get({ id: id }).then(function (response) {
-                //this.bill = response.data;
                 _this2.bill = new BillPay(response.data);
             });
         },
@@ -68,13 +65,14 @@ module.exports = {
 };
 
 /***/ }),
-/* 4 */
+
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var modalComponent = __webpack_require__(12);
+var modalComponent = __webpack_require__(44);
 
 module.exports = {
     components: {
@@ -119,7 +117,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 5 */
+
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -177,7 +176,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 6 */
+
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -231,13 +231,14 @@ module.exports = {
 };
 
 /***/ }),
-/* 7 */
+
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var modalComponent = __webpack_require__(12);
+var modalComponent = __webpack_require__(44);
 
 module.exports = {
     components: {
@@ -281,7 +282,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 8 */
+
+/***/ 23:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -340,7 +342,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 9 */
+
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -367,7 +370,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 10 */
+
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -403,8 +407,8 @@ module.exports = {
 };
 
 /***/ }),
-/* 11 */,
-/* 12 */
+
+/***/ 44:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -423,4 +427,5 @@ module.exports = {
 };
 
 /***/ })
-]);
+
+});

@@ -1,6 +1,7 @@
 'use strict';
 
-//require('style!css!');
+require('style!css!../css/app.css');
+require('style!css!../css/pablo.css');
 require('./bill');
 require('./filters');
 require('./resources');

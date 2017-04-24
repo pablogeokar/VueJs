@@ -1,4 +1,4 @@
-export class BillPay {
+class BillPay {
     constructor(data = {}) {
         this.date_due = '';
         this.name = '';
@@ -18,3 +18,8 @@ export class BillPay {
         }
     }
 }
+
+
+
+
+

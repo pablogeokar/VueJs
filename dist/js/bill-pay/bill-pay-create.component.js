@@ -1,5 +1,6 @@
 "use strict";
 
+require('../bill');
 var names = ["Conta de luz", "Conta de água", "Conta de telefone", "Supermercado", "Cartão de Crédito", "Empréstimo", "Gasolina"];
 
 module.exports = {
@@ -26,7 +27,6 @@ module.exports = {
             var _this = this;
 
             var data = this.bill.toJSON();
-            //let data = Vue.util.extend(this.bill, {date_due: this.getDateDue(this.bill.date_due)});
             if (this.formType == 'INSERT') {
                 Bill.save({}, data).then(function (response) {
                     Materialize.toast("Conta criada com sucesso", 4000);
@@ -45,7 +45,6 @@ module.exports = {
             var _this2 = this;
 
             Bill.get({ id: id }).then(function (response) {
-                //this.bill = response.data;
                 _this2.bill = new BillPay(response.data);
             });
         },
