@@ -1,14 +1,13 @@
 webpackJsonp([0],{
 
-/***/ 18:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(1);
 var names = ["Conta de luz", "Conta de água", "Conta de telefone", "Supermercado", "Cartão de Crédito", "Empréstimo", "Gasolina"];
-
+var BillPay = __webpack_require__(42);
 module.exports = {
     template: "\n<div class=\"container\">      \n    <form name=\"form\" @submit.prevent=\"submit\">\n        <div class=\"row\">\n        <h2>Nova Conta</h2>\n            <div class=\"input-field col s6\"> \n                <label class=\"active\">Vencimento:</label>\n                <!-- <input type=\"date\" class=\"datepicker\" v-model=\"bill.date_due | dateFormat 'pt-BR'\">-->\n                <input type=\"text\" v-model=\"bill.date_due | dateFormat 'pt-BR'\" placeholder=\"Informe a Data\">\n            </div>\n\n            <div class=\"input-field col s6\">        \n                <label class=\"active\">valor:</label>\n                <input type=\"text\" v-model=\"bill.value | numberFormat 'pt-BR'\"><br/><br/>\n            </div>\n        </div>\n\n        <div class=\"row\">            \n            <div class=\"input-field col s6\">\n                <label class=\"active\">Nome:</label>\n                <select v-model=\"bill.name\" id=\"name\" class=\"browser-default\">        \n                    <option value=\"\" disabled selected>Escolha uma conta</option>\n                    <option v-for=\"o in names\" :value=\"o\">{{o}}</option>\n                </select>            \n            </div>\n\n            <div class=\"input-field col s6\">\n                <input type=\"checkbox\" v-model=\"bill.done\" id=\"pago\">\n                <label for=\"pago\">Pago?</label> \n            </div>\n        </div>               \n\n        <div class=\"row\">        \n        <div class=\"input-field col s12\">\n            <input type=\"button\" value=\"Enviar\" v-on:click=\"submit\" class=\"btn btn-large right\">\n        </div>\n        </div>        \n    </form>\n</div>\n",
     data: function data() {
@@ -22,10 +21,10 @@ module.exports = {
         if (this.$route.name == 'bill-pay.update') {
             this.formType = 'UPDATE';
             this.getBill(this.$route.params.id);
-        };
-        $(document).ready(function () {
-            $('#name').material_select();
-        });
+        }
+    },
+    ready: function ready() {
+        $('#name').material_select();
     },
 
     methods: {
@@ -66,13 +65,13 @@ module.exports = {
 
 /***/ }),
 
-/***/ 19:
+/***/ 16:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var modalComponent = __webpack_require__(44);
+var modalComponent = __webpack_require__(41);
 
 module.exports = {
     components: {
@@ -118,7 +117,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 20:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -177,7 +176,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 21:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -232,13 +231,13 @@ module.exports = {
 
 /***/ }),
 
-/***/ 22:
+/***/ 19:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var modalComponent = __webpack_require__(44);
+var modalComponent = __webpack_require__(41);
 
 module.exports = {
     components: {
@@ -283,7 +282,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 23:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -343,7 +342,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 24:
+/***/ 21:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -371,7 +370,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 25:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -408,7 +407,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 44:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -425,6 +424,47 @@ module.exports = {
         };
     }
 };
+
+/***/ }),
+
+/***/ 42:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+module.exports = function () {
+    function BillPay() {
+        var data = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+        _classCallCheck(this, BillPay);
+
+        this.date_due = '';
+        this.name = '';
+        this.value = 0;
+        this.done = false;
+        Object.assign(this, data);
+    }
+
+    _createClass(BillPay, [{
+        key: 'toJSON',
+        value: function toJSON() {
+            var date_due = typeof this.date_due === 'string' && this.date_due.length == 10 ? this.date_due : this.date_due.toISOString().substring(0, 10);
+            return {
+                date_due: date_due,
+                name: this.name,
+                value: this.value,
+                done: this.done
+            };
+        }
+    }]);
+
+    return BillPay;
+}();
 
 /***/ })
 

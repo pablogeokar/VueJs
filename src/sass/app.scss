@@ -1,11 +1,11 @@
 //Material Icons
 @import url(http://fonts.googleapis.com/icon?family=Material+Icons);
 
-@import "node_modules/materialize-css/sass/components/color";
+@import "~materialize-css/sass/components/color";
 @import "variables";
 
 //Materialize
-@import "node_modules/materialize-css/sass/materialize";
+@import "~materialize-css/sass/materialize";
 
 //Minhas Classes
 .my-custom-modal{

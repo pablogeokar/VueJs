@@ -1,8 +1,9 @@
 'use strict';
 
-require('style!css!../css/app.css');
-require('style!css!../css/pablo.css');
-require('./bill');
+//require('style!css!../css/app.css');
+//require('style!css!../css/pablo.css');
+require('../sass/app.scss');
+//require('./bill');
 require('./filters');
 require('./resources');
 require(['./bill-pay/bill-pay.component', './bill-pay/bill-pay-list.component', './bill-pay/bill-pay-create.component', './bill-receive/bill-receive.component', './bill-receive/bill-receive-list.component', './bill-receive/bill-receive-create.component', './dashboard.component', './bill.component'], function (billPayComponent, billPayListComponent, billPayCreateComponent, billReceiveComponent, billReceiveListComponent, billReceiveCreateComponent, dashboardComponent, billComponent) {

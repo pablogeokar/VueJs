@@ -1,4 +1,4 @@
-require('../bill');
+
 const names = [
     "Conta de luz",
     "Conta de água",
@@ -8,7 +8,7 @@ const names = [
     "Empréstimo",
     "Gasolina"
 ];
-
+let BillPay = require('../bill');
 module.exports = {
     template: `
 <div class="container">      
@@ -61,14 +61,14 @@ module.exports = {
         if (this.$route.name == 'bill-pay.update') {
             this.formType = 'UPDATE';
             this.getBill(this.$route.params.id);
-        };
-        $(document).ready(function () {
-            $('#name').material_select();
-        });
+        }
+    },
+    ready() {
+        $('#name').material_select();
     },
     methods: {
         submit() {
-            let data = this.bill.toJSON();            
+            let data = this.bill.toJSON();
             if (this.formType == 'INSERT') {
                 Bill.save({}, data).then((response) => {
                     Materialize.toast("Conta criada com sucesso", 4000);
@@ -85,7 +85,7 @@ module.exports = {
 
         },
         getBill(id) {
-            Bill.get({ id: id }).then((response) => {                
+            Bill.get({ id: id }).then((response) => {
                 this.bill = new BillPay(response.data);
             });
         },

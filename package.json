@@ -34,6 +34,8 @@
     "css-loader": "^0.28.0",
     "file-loader": "^0.11.1",
     "gulp": "^3.9.1",
+    "node-sass": "^4.5.2",
+    "sass-loader": "^6.0.3",
     "style-loader": "^0.16.1",
     "url-loader": "^0.5.8",
     "webpack": "^2.4.1"

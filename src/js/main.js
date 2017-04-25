@@ -1,7 +1,8 @@
 
-require('style!css!../css/app.css');
-require('style!css!../css/pablo.css');
-require('./bill');
+//require('style!css!../css/app.css');
+//require('style!css!../css/pablo.css');
+require('../sass/app.scss');
+//require('./bill');
 require('./filters');
 require('./resources');
 require([
