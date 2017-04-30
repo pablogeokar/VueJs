@@ -1,13 +1,13 @@
 webpackJsonp([0],{
 
-/***/ 15:
+/***/ 34:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var names = ["Conta de luz", "Conta de água", "Conta de telefone", "Supermercado", "Cartão de Crédito", "Empréstimo", "Gasolina"];
-var BillPay = __webpack_require__(42);
+var BillPay = __webpack_require__(43);
 module.exports = {
     template: "\n<div class=\"container\">      \n    <form name=\"form\" @submit.prevent=\"submit\">\n        <div class=\"row\">\n        <h2>Nova Conta</h2>\n            <div class=\"input-field col s6\"> \n                <label class=\"active\">Vencimento:</label>\n                <!-- <input type=\"date\" class=\"datepicker\" v-model=\"bill.date_due | dateFormat 'pt-BR'\">-->\n                <input type=\"text\" v-model=\"bill.date_due | dateFormat 'pt-BR'\" placeholder=\"Informe a Data\">\n            </div>\n\n            <div class=\"input-field col s6\">        \n                <label class=\"active\">valor:</label>\n                <input type=\"text\" v-model=\"bill.value | numberFormat 'pt-BR'\"><br/><br/>\n            </div>\n        </div>\n\n        <div class=\"row\">            \n            <div class=\"input-field col s6\">\n                <label class=\"active\">Nome:</label>\n                <select v-model=\"bill.name\" id=\"name\" class=\"browser-default\">        \n                    <option value=\"\" disabled selected>Escolha uma conta</option>\n                    <option v-for=\"o in names\" :value=\"o\">{{o}}</option>\n                </select>            \n            </div>\n\n            <div class=\"input-field col s6\">\n                <input type=\"checkbox\" v-model=\"bill.done\" id=\"pago\">\n                <label for=\"pago\">Pago?</label> \n            </div>\n        </div>               \n\n        <div class=\"row\">        \n        <div class=\"input-field col s12\">\n            <input type=\"button\" value=\"Enviar\" v-on:click=\"submit\" class=\"btn btn-large right\">\n        </div>\n        </div>        \n    </form>\n</div>\n",
     data: function data() {
@@ -65,13 +65,13 @@ module.exports = {
 
 /***/ }),
 
-/***/ 16:
+/***/ 35:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var modalComponent = __webpack_require__(41);
+var modalComponent = __webpack_require__(42);
 
 module.exports = {
     components: {
@@ -117,7 +117,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 17:
+/***/ 36:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -176,7 +176,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 18:
+/***/ 37:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -231,13 +231,13 @@ module.exports = {
 
 /***/ }),
 
-/***/ 19:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var modalComponent = __webpack_require__(41);
+var modalComponent = __webpack_require__(42);
 
 module.exports = {
     components: {
@@ -282,7 +282,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 20:
+/***/ 39:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -342,7 +342,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 21:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -370,7 +370,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 22:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -407,7 +407,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 41:
+/***/ 42:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -427,7 +427,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 42:
+/***/ 43:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
